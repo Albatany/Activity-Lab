@@ -10,7 +10,24 @@ This is an extension that can be installed in Visual Studio Code to automaticall
 3. A full-stack option is available, allowing you to work with more than just a single programming language; the system will automatically generate multiple files, simulating the workflow of a full-stack developer. by switching between different programming languages.
 
 ## How to install?
-Ya begitulah bangsat!
+How to use it:
+1. Download the ZIP file and extract it.
+2. Open VS Code → Extensions → ... menu → Install from VSIX.
+3. Select `activity-lab-synthetic-1.0.0.vsix`.
+4. Press Ctrl + Shift + P, then search for "Activity Lab: Start Synthetic Session".
+5. Select the programming language, duration, and simulation interval.
+
+**Installation via Terminal**
+
+Windows:
+```
+code --install-extension .\activity-lab-synthetic-1.0.0.vsix
+```
+
+Linux:
+```
+code --install-extension ./activity-lab-synthetic-1.0.0.vsix
+```
 
 ## What happend next?
 Don't forget to drop a follow, star and also fork this repository. It's free to use and free to customize, and if you have a brilliant idea here and you want to be contributor, feel free to pull request!
