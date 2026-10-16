@@ -1,0 +1,10 @@
+'use strict';
+const assert = require('node:assert/strict');
+const { PATTERNS, buildPlan } = require('../linePatterns');
+assert.deepEqual(buildPlan(PATTERNS.balanced,0),{add:4,remove:0});
+assert.deepEqual(buildPlan(PATTERNS.balanced,4),{add:4,remove:4});
+assert.deepEqual(buildPlan(PATTERNS.more,4),{add:4,remove:1});
+assert.deepEqual(buildPlan(PATTERNS.heavy,40),{add:8,remove:1});
+assert.throws(()=>buildPlan({additions:0,deletions:-1},10));
+assert.throws(()=>buildPlan(PATTERNS.more,-1));
+console.log('PASS: synthetic line ratio plans');
