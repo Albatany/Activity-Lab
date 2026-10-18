@@ -1,17 +1,14 @@
 <div align="center">
 
-# ◈ Activity Lab
+# Activity Lab
 
 ### Editor Activity Simulator for Visual Studio Code
 
-**Built with care by Albatany**
+*Eksplorasi perilaku editor, bahasa pemrograman, dan perubahan file dalam satu lingkungan percobaan.*
 
 ![Version](https://img.shields.io/badge/version-4.0.0-334155?style=for-the-badge)
 ![VS Code](https://img.shields.io/badge/VS%20Code-1.85%2B-2563eb?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-0f766e?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-475569?style=for-the-badge)
-
-*Eksplorasi perilaku editor, bahasa pemrograman, dan perubahan file dalam satu lingkungan percobaan.*
 
 **© Albatany 2026**
 
@@ -19,7 +16,7 @@
 
 ---
 
-## ✦ Tentang Activity Lab
+## About Activity Lab
 
 **Activity Lab** adalah extension Visual Studio Code untuk mensimulasikan perubahan file menggunakan API resmi VS Code. Kamu bisa bereksperimen dengan berbagai profil bahasa, bidang teknologi, nama proyek, durasi, dan pola penambahan atau penghapusan baris.
 
@@ -28,7 +25,7 @@ Dirancang untuk pengguna **Windows** dan **Kali Linux**. Setelah memasang instal
 > [!IMPORTANT]
 > **Ini adalah simulator, bukan pelacak jam coding.** Aktivitas yang dihasilkan bersifat otomatis dan **tidak boleh dianggap sebagai pengalaman profesional, jam kerja nyata, atau bukti produktivitas**. WakaTime maupun extension pelacak lain menentukan sendiri apakah suatu event dihitung. Activity Lab tidak dapat menjamin heartbeat, durasi, additions, atau deletions muncul pada dashboard mana pun.
 
-## ✧ Apa yang baru pada versi 4
+## What's new in 4.0.0?
 
 | Fitur | Detail |
 | :--- | :--- |
@@ -41,17 +38,14 @@ Dirancang untuk pengguna **Windows** dan **Kali Linux**. Setelah memasang instal
 | **Laporan sesi** | Menyimpan perubahan simulasi dan informasi proyek dalam `session-report.json` |
 | **Mudah digunakan** | Pilihan interaktif langsung dari Command Palette dalam Bahasa Indonesia |
 
-## 📦 Releases and changelog
+## Releases and changelog
 
 - [Full changelog: v1.0.0 → v4.0.0](CHANGELOG.md)
-- [Latest release notes: v4.0.0](docs/releases/v4.0.0.md)
-- [How to publish a GitHub release](docs/GITHUB_RELEASE_GUIDE.md)
-- [Panduan rilis GitHub (Bahasa Indonesia)](docs/PANDUAN_RILIS_GITHUB.md)
 
 **Current version:** `v4.0.0`. The VSIX is available under `release/`; for
 public distribution, attach it to the corresponding GitHub Release.
 
-## ⚡ Instalasi cepat
+## Quick Installation
 
 ### Metode 1: melalui VS Code
 
@@ -61,7 +55,7 @@ public distribution, attach it to the corresponding GitHub Release.
 4. Pilih file `.vsix` dan reload VS Code jika diminta.
 5. Buka Command Palette dengan `Ctrl + Shift + P`, lalu cari **Activity Lab: Mulai Simulasi**.
 
-### Metode 2: melalui terminal
+### Method 2: From Terminal
 
 **Windows PowerShell**
 
@@ -77,7 +71,7 @@ code --install-extension ./activity-lab-synthetic-4.0.0.vsix --force
 
 > Extension ID tetap `localdev.activity-lab-synthetic` agar dapat memperbarui versi terdahulu. Ini **bukan** extension resmi WakaTime dan belum dipublikasikan di VS Code Marketplace.
 
-## ✦ Alur penggunaan
+## Workflow
 
 1. Buka **Activity Lab: Mulai Simulasi**.
 2. Pilih **Bahasa tunggal**, **Mode profesi**, **Katalog bahasa WakaTime**, atau **Bahasa kustom**.
@@ -87,7 +81,7 @@ code --install-extension ./activity-lab-synthetic-4.0.0.vsix --force
 6. Klik status bar Activity Lab atau jalankan **Activity Lab: Hentikan Simulasi** untuk berhenti.
 7. Lihat hasil lokal dalam `session-report.json`.
 
-### Contoh alur
+### Example
 
 ```text
 Activity Lab: Mulai Simulasi
@@ -120,7 +114,7 @@ session-2026-10-17T12-00-00-000Z-a1b2c3/
 
 *Nama file dipilih secara acak dan contoh di atas bersifat ilustratif. Ekstensi mengikuti profil bahasa yang tersedia.*
 
-## 🧭 Pilihan mode
+## Mode choice
 
 | Bidang | Mode tersedia |
 | :--- | :--- |
@@ -146,7 +140,7 @@ Sumber resmi:
 * [WakaTime untuk VS Code](https://wakatime.com/vs-code)
 * [VS Code Extension API](https://code.visualstudio.com/api/references/vscode-api)
 
-## 🔒 Keamanan, privasi, dan batasan
+## Security, privacy, and limit
 
 * File simulasi hanya dibuat dalam `%USERPROFILE%\.vscode-activity-lab\` pada Windows atau `~/.vscode-activity-lab/` pada Linux.
 * Program tidak membuka atau mengubah file pada repository pribadimu.
@@ -158,7 +152,7 @@ Sumber resmi:
 > [!NOTE]
 > Angka `synthetic_additions` dan `synthetic_deletions` pada laporan hanya menghitung operasi internal. Angka ini **bukan** statistik yang sudah diterima atau diverifikasi oleh WakaTime.
 
-## 🛠️ Menjalankan dari source
+## Run from source
 
 Node.js versi 18 atau lebih baru diperlukan **untuk pengujian source**, bukan untuk memakai file `.vsix`.
 
@@ -180,15 +174,9 @@ tests/                Pengujian berbasis mock VS Code
 docs/                 Panduan instalasi dan verifikasi
 ```
 
-## 🤝 Kontribusi dan lisensi
+## Contribution
 
 Masukan, perbaikan dokumentasi, dan pull request diterima dengan senang hati. Lihat [CONTRIBUTING.md](CONTRIBUTING.md) sebelum berkontribusi.
-
-Dirilis dengan lisensi [MIT](LICENSE). Activity Lab bukan produk resmi Microsoft atau WakaTime, dan tidak berafiliasi dengan keduanya.
-
-<div align="center">
-
-**Designed & Developed by Albatany**
 
 **© Albatany 2026. All rights reserved except as granted under the MIT License.**
 
