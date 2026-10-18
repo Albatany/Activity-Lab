@@ -2,9 +2,9 @@
 
 // Metrics are LOCAL synthetic operations, not WakaTime server statistics.
 const PATTERNS = Object.freeze({
-  balanced: Object.freeze({ id: 'balanced', label: 'Balanced — additions ≈ deletions (1:1)', description: '4 placeholder lines added and, when possible, 4 previous lines removed per step', additions: 4, deletions: 4 }),
-  more: Object.freeze({ id: 'more', label: 'Additions favored — 4:1', description: '4 placeholder lines added and 1 old line removed per step', additions: 4, deletions: 1 }),
-  heavy: Object.freeze({ id: 'heavy', label: 'Additions strongly favored — 8:1', description: '8 placeholder lines added and 1 old line removed per step', additions: 8, deletions: 1 })
+  balanced: Object.freeze({ id: 'balanced', label: 'Seimbang 1:1', description: 'Menambahkan 4 baris dan menghapus maksimal 4 baris sebelumnya', additions: 4, deletions: 4 }),
+  more: Object.freeze({ id: 'more', label: 'Penambahan dominan 4:1', description: 'Menambahkan 4 baris dan menghapus maksimal 1 baris sebelumnya', additions: 4, deletions: 1 }),
+  heavy: Object.freeze({ id: 'heavy', label: 'Pertumbuhan tinggi 8:1', description: 'Menambahkan 8 baris dan menghapus maksimal 1 baris sebelumnya', additions: 8, deletions: 1 })
 });
 function buildPlan(pattern, availableLines) {
   if (!pattern || !Number.isInteger(pattern.additions) || !Number.isInteger(pattern.deletions) ||

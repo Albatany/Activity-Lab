@@ -1,0 +1,9 @@
+tests/**
+docs/**
+.github/**
+.gitignore
+.vscodeignore
+CONTRIBUTING.md
+CHANGELOG.md
+SECURITY.md
+release/**

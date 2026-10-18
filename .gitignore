@@ -1,0 +1,14 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+*.vsix
+!release/activity-lab-synthetic-4.0.0.vsix
+*.zip
+.vscode-test/
+.vscode/
+coverage/
+.env
+.env.*
+!.env.example
+session-report.json

@@ -1,33 +1,195 @@
-# Activity Lab
+<div align="center">
 
-Introducing "Activity Lab" if you use tools like WakaTime, DevCode, or similar services to track your coding statistics within Visual Studio Code, this might be just the thing for you!
+# ◈ Activity Lab
 
-This is an extension that can be installed in Visual Studio Code to automatically type and delete code within your programs. When you run this "Activity Lab" extension, it will automatically write code much like a human would, but in an automated fashion and the code it generates is random.
+### Editor Activity Simulator for Visual Studio Code
 
-## Features
-1. Choosing the programming language you wish to use.
-2. Setting a time duration. You can decide how many hours you want to spend coding non-stop (there is also an option for no time limit, in which case it will only stop when you manually end the process via a command).
-3. A full-stack option is available, allowing you to work with more than just a single programming language; the system will automatically generate multiple files, simulating the workflow of a full-stack developer. by switching between different programming languages.
+**Built with care by Albatany**
 
-## How to install?
-How to use it:
-1. Download the ZIP file and extract it.
-2. Open VS Code → Extensions → ... menu → Install from VSIX.
-3. Select `activity-lab-synthetic-1.0.0.vsix`.
-4. Press Ctrl + Shift + P, then search for "Activity Lab: Start Synthetic Session".
-5. Select the programming language, duration, and simulation interval.
+![Version](https://img.shields.io/badge/version-4.0.0-334155?style=for-the-badge)
+![VS Code](https://img.shields.io/badge/VS%20Code-1.85%2B-2563eb?style=for-the-badge)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-0f766e?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-475569?style=for-the-badge)
 
-**Installation via Terminal**
+*Eksplorasi perilaku editor, bahasa pemrograman, dan perubahan file dalam satu lingkungan percobaan.*
 
-Windows:
+**© Albatany 2026**
+
+</div>
+
+---
+
+## ✦ Tentang Activity Lab
+
+**Activity Lab** adalah extension Visual Studio Code untuk mensimulasikan perubahan file menggunakan API resmi VS Code. Kamu bisa bereksperimen dengan berbagai profil bahasa, bidang teknologi, nama proyek, durasi, dan pola penambahan atau penghapusan baris.
+
+Dirancang untuk pengguna **Windows** dan **Kali Linux**. Setelah memasang installer VSIX, kamu **tidak perlu** menginstal Python atau Node.js hanya untuk menjalankannya.
+
+> [!IMPORTANT]
+> **Ini adalah simulator, bukan pelacak jam coding.** Aktivitas yang dihasilkan bersifat otomatis dan **tidak boleh dianggap sebagai pengalaman profesional, jam kerja nyata, atau bukti produktivitas**. WakaTime maupun extension pelacak lain menentukan sendiri apakah suatu event dihitung. Activity Lab tidak dapat menjamin heartbeat, durasi, additions, atau deletions muncul pada dashboard mana pun.
+
+## ✧ Apa yang baru pada versi 4
+
+| Fitur | Detail |
+| :--- | :--- |
+| **32 mode teknologi** | Full Stack, Backend, AI Engineer, Data Analyst, Cyber Security, MLOps, Cloud, dan banyak lagi |
+| **141 profil bahasa atau file** | Assembly, SQL, Bash, Markdown, Python, TypeScript, Rust, Go, dan lain sebagainya |
+| **Nama proyek opsional** | Gunakan nama sendiri melalui file `.wakatime-project` di folder sesi |
+| **Nama file variatif** | Contohnya `api_routes_a1b2c3.ts`, `model_training_4e2a1f.py`, `query_report_3a2b1c.sql` |
+| **Rasio perubahan** | Seimbang 1:1, penambahan dominan 4:1, atau pertumbuhan tinggi 8:1 |
+| **Durasi fleksibel** | Mulai 5 menit hingga 8 jam, atau sampai dihentikan sendiri |
+| **Laporan sesi** | Menyimpan perubahan simulasi dan informasi proyek dalam `session-report.json` |
+| **Mudah digunakan** | Pilihan interaktif langsung dari Command Palette dalam Bahasa Indonesia |
+
+## 📦 Releases and changelog
+
+- [Full changelog: v1.0.0 → v4.0.0](CHANGELOG.md)
+- [Latest release notes: v4.0.0](docs/releases/v4.0.0.md)
+- [How to publish a GitHub release](docs/GITHUB_RELEASE_GUIDE.md)
+- [Panduan rilis GitHub (Bahasa Indonesia)](docs/PANDUAN_RILIS_GITHUB.md)
+
+**Current version:** `v4.0.0`. The VSIX is available under `release/`; for
+public distribution, attach it to the corresponding GitHub Release.
+
+## ⚡ Instalasi cepat
+
+### Metode 1: melalui VS Code
+
+1. Unduh [installer Activity Lab v4](release/activity-lab-synthetic-4.0.0.vsix) dari folder `release` atau aset GitHub Releases.
+2. Buka **Extensions** di VS Code dengan `Ctrl + Shift + X`.
+3. Klik menu **···** lalu pilih **Install from VSIX**.
+4. Pilih file `.vsix` dan reload VS Code jika diminta.
+5. Buka Command Palette dengan `Ctrl + Shift + P`, lalu cari **Activity Lab: Mulai Simulasi**.
+
+### Metode 2: melalui terminal
+
+**Windows PowerShell**
+
+```powershell
+code --install-extension .\activity-lab-synthetic-4.0.0.vsix --force
 ```
-code --install-extension .\activity-lab-synthetic-1.0.0.vsix
+
+**Kali Linux**
+
+```bash
+code --install-extension ./activity-lab-synthetic-4.0.0.vsix --force
 ```
 
-Linux:
-```
-code --install-extension ./activity-lab-synthetic-1.0.0.vsix
+> Extension ID tetap `localdev.activity-lab-synthetic` agar dapat memperbarui versi terdahulu. Ini **bukan** extension resmi WakaTime dan belum dipublikasikan di VS Code Marketplace.
+
+## ✦ Alur penggunaan
+
+1. Buka **Activity Lab: Mulai Simulasi**.
+2. Pilih **Bahasa tunggal**, **Mode profesi**, **Katalog bahasa WakaTime**, atau **Bahasa kustom**.
+3. Ketik nama proyek jika ingin menentukan namanya, atau kosongkan untuk memakai `ActivityLab Synthetic`.
+4. Tentukan batas sesi, pola perubahan baris, dan interval edit.
+5. Baca konfirmasi simulasi, kemudian mulai.
+6. Klik status bar Activity Lab atau jalankan **Activity Lab: Hentikan Simulasi** untuk berhenti.
+7. Lihat hasil lokal dalam `session-report.json`.
+
+### Contoh alur
+
+```text
+Activity Lab: Mulai Simulasi
+    ↓
+Mode profesi → Data Analyst
+    ↓
+Nama proyek → Riset Analitik 2026
+    ↓
+Durasi → 1 jam
+    ↓
+Rasio → Penambahan dominan 4:1
+    ↓
+Interval → 30 detik
+    ↓
+Konfirmasi → Mulai simulasi
 ```
 
-## What happend next?
-Don't forget to drop a follow, star and also fork this repository. It's free to use and free to customize, and if you have a brilliant idea here and you want to be contributor, feel free to pull request!
+### Contoh struktur hasil
+
+```text
+session-2026-10-17T12-00-00-000Z-a1b2c3/
+├── .wakatime-project
+├── TENTANG_SIMULASI.txt
+├── model_training_a81c2e.py
+├── query_report_3e8f11.sql
+├── statistical_report_51a8ba.r
+├── research_6a7b8c.csv
+└── session-report.json
+```
+
+*Nama file dipilih secara acak dan contoh di atas bersifat ilustratif. Ekstensi mengikuti profil bahasa yang tersedia.*
+
+## 🧭 Pilihan mode
+
+| Bidang | Mode tersedia |
+| :--- | :--- |
+| **Pengembangan aplikasi** | Full Stack Developer, Frontend Engineer, Backend Engineer, API Developer, Mobile Developer, Desktop Application Developer, Game Developer, Software QA Engineer |
+| **Data dan AI** | Data Analyst, Data Scientist, Data Engineer, Analytics Engineer, AI Engineer, Machine Learning Engineer, MLOps Engineer, Natural Language Processing Engineer, Computer Vision Engineer |
+| **Infrastruktur dan keamanan** | Cloud Engineer, DevOps Engineer, Site Reliability Engineer, Cyber Security Analyst, Security Engineer, DevSecOps Engineer, Digital Forensics Researcher, Network Automation Engineer |
+| **Sistem dan riset** | Systems Programmer, Embedded Systems Engineer, Robotics Developer, Blockchain Developer, Database Engineer, Scientific Computing Researcher, Technical Writer |
+
+Mode profesi adalah **tema pilihan bahasa dan file** untuk eksperimen. Memilih mode tertentu tidak berarti penggunanya memiliki keterampilan atau jabatan tersebut.
+
+## ◇ Kompatibilitas pencatat aktivitas
+
+Activity Lab menggunakan `workspace.applyEdit()` dan penyimpanan dokumen melalui API VS Code. Akibatnya, extension lain **mungkin dapat mengamati event perubahan dokumen** jika mereka berlangganan event terkait.
+
+Namun setiap extension memiliki aturan masing masing. **Tidak ada jaminan** bahwa WakaTime, Code Time, atau alat statistik lainnya akan mencatat event sintetis sebagai aktivitas kerja. Activity Lab tidak mengintegrasikan, mengendalikan, atau memalsukan heartbeat dari aplikasi eksternal.
+
+**Nama proyek WakaTime.** Pada setiap folder sesi, Activity Lab menulis `.wakatime-project` dengan nama proyek yang kamu masukkan. Menurut dokumentasi WakaTime CLI, file ini dapat menggantikan nama proyek yang dideteksi secara otomatis. Hal itu **tidak** menjamin aktivitas akan tampil dan tidak memengaruhi catatan historis.
+
+Sumber resmi:
+
+* [Panduan deteksi proyek WakaTime](https://github.com/wakatime/wakatime-cli/blob/develop/USAGE.md#project-detection)
+* [FAQ WakaTime](https://wakatime.com/faq)
+* [WakaTime untuk VS Code](https://wakatime.com/vs-code)
+* [VS Code Extension API](https://code.visualstudio.com/api/references/vscode-api)
+
+## 🔒 Keamanan, privasi, dan batasan
+
+* File simulasi hanya dibuat dalam `%USERPROFILE%\.vscode-activity-lab\` pada Windows atau `~/.vscode-activity-lab/` pada Linux.
+* Program tidak membuka atau mengubah file pada repository pribadimu.
+* Jika kamu mengedit file percobaan secara manual, Activity Lab menghentikan sesi untuk melindungi perubahanmu.
+* Ukuran dibatasi hingga **2 MB per file** dan **10 MB per sesi**. Mode sampai dihentikan sendiri masih dapat berhenti bila batas ini tercapai, terjadi error, atau VS Code ditutup.
+* Tidak meminta kredensial WakaTime. Permintaan jaringan hanya terjadi jika kamu memilih katalog bahasa WakaTime online yang bersifat publik.
+* Metadata sesi dan penanda jelas bahwa kontennya adalah simulasi tetap disimpan pada folder hasil.
+
+> [!NOTE]
+> Angka `synthetic_additions` dan `synthetic_deletions` pada laporan hanya menghitung operasi internal. Angka ini **bukan** statistik yang sudah diterima atau diverifikasi oleh WakaTime.
+
+## 🛠️ Menjalankan dari source
+
+Node.js versi 18 atau lebih baru diperlukan **untuk pengujian source**, bukan untuk memakai file `.vsix`.
+
+```bash
+npm test
+npm run check
+```
+
+File penting:
+
+```text
+extension.js          Logika sesi dan integrasi VS Code
+modes.js              Definisi 32 mode teknologi
+fileNaming.js         Nama file acak dan validasi nama proyek
+languages.json        Katalog 141 profil bahasa atau file
+linePatterns.js       Rasio penambahan dan penghapusan
+package.json          Manifest extension VS Code
+tests/                Pengujian berbasis mock VS Code
+docs/                 Panduan instalasi dan verifikasi
+```
+
+## 🤝 Kontribusi dan lisensi
+
+Masukan, perbaikan dokumentasi, dan pull request diterima dengan senang hati. Lihat [CONTRIBUTING.md](CONTRIBUTING.md) sebelum berkontribusi.
+
+Dirilis dengan lisensi [MIT](LICENSE). Activity Lab bukan produk resmi Microsoft atau WakaTime, dan tidak berafiliasi dengan keduanya.
+
+<div align="center">
+
+**Designed & Developed by Albatany**
+
+**© Albatany 2026. All rights reserved except as granted under the MIT License.**
+
+</div>

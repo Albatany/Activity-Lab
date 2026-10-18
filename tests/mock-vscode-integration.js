@@ -69,14 +69,15 @@ const vscode = {
     createStatusBarItem() { return { text:'',tooltip:'',command:'',show() {},dispose() {} }; },
     async showQuickPick(items) {
       const labels = items.map(x => typeof x === 'string' ? x : x.label);
-      if (labels.some(x=>x.includes('Single language — offline'))) return items.find(x => scenario==='stack' ? x.kind==='stack' : x.kind==='local');
-      if (labels.includes('Full-stack demo')) return 'Full-stack demo';
+      if (labels.some(x=>x.includes('Bahasa tunggal'))) return items.find(x => scenario==='stack' ? x.kind==='mode' : x.kind==='local');
+      if (labels.includes('Full Stack Developer')) return items.find(x => x.label==='Full Stack Developer');
       if (labels.includes('SQL')) return items.find(x=>x.label === (scenario==='json' ? 'JSON' : scenario==='python' ? 'Python' : 'SQL'));
-      if (labels.some(x=>x.startsWith('Balanced —'))) return items.find(x=>x.data.id===ratio);
-      if (labels.includes('5 minutes')) return items.find(x=>x.label === (scenario==='stack' ? '8 hours' : 'Until I stop (no automatic time limit)'));
-      if (labels.some(x=>x.includes('seconds between steps'))) return items[0];
+      if (labels.some(x=>x.startsWith('Seimbang 1:1'))) return items.find(x=>x.data.id===ratio);
+      if (labels.includes('5 menit')) return items.find(x=>x.label === (scenario==='stack' ? '8 jam' : 'Jalankan sampai saya hentikan'));
+      if (labels.includes('15 detik')) return items[0];
       return items[0];
     },
+    async showInputBox() { return scenario === 'stack' ? 'Riset Analitik 2026' : ''; },
     async showWarningMessage(_,__,confirm) { return confirm; },
     async showInformationMessage() {},
     async showErrorMessage(msg) { throw Error(String(msg)); },
@@ -99,7 +100,7 @@ async function main() {
   let sessionFolders = fs.readdirSync(path.join(root,'.vscode-activity-lab')).filter(x=>x.startsWith('session-'));
   assert.equal(sessionFolders.length,1);
   let folder = path.join(root,'.vscode-activity-lab',sessionFolders[0]);
-  assert.equal(fs.readFileSync(path.join(folder,'.wakatime-project'),'utf8'),'ActivityLab-Synthetic\n');
+  assert.equal(fs.readFileSync(path.join(folder,'.wakatime-project'),'utf8'),'ActivityLab Synthetic\n');
   let filename = fs.readdirSync(folder).find(f=>f.endsWith('.sql'));
   assert(filename);
   let file = path.join(folder, filename);
@@ -149,13 +150,15 @@ async function main() {
   sessionFolders=fs.readdirSync(path.join(root,'.vscode-activity-lab')).filter(x=>x.startsWith('session-'));
   assert.equal(sessionFolders.length,4);
   folder=path.join(root,'.vscode-activity-lab',sessionFolders.sort().at(-1));
-  const demoFiles = fs.readdirSync(folder).filter(x=>x.startsWith('demo_'));
-  assert(demoFiles.length >= 8, `full-stack files: ${demoFiles.length}`);
+  const generatedFiles = fs.readdirSync(folder).filter(x=>/_[0-9a-f]{6}\.[\w.+-]+$/.test(x));
+  assert(generatedFiles.length >= 8, `full stack files: ${generatedFiles.length}`);
+  assert.equal(fs.readFileSync(path.join(folder, '.wakatime-project'),'utf8'), 'Riset Analitik 2026\n');
   timer = allTimers.find(x=>x.active && x.ms===15000);
   assert(timer);
   await timer.fn(); await sleep(50);
   assert(events.filter(x=>x==='open-editor').length>=4, 'rotation opens distinct files');
   await commands.get('activityLab.stop')();
+  assert.equal(JSON.parse(fs.readFileSync(path.join(folder, 'session-report.json'),'utf8')).project, 'Riset Analitik 2026');
   assert(allTimers.every(x=>!x.active));
   ext.deactivate();
   assert(events.filter(x=>x==='save').length >= 3);

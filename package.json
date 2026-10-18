@@ -1,8 +1,8 @@
 {
   "name": "activity-lab-synthetic",
-  "displayName": "Activity Lab (Synthetic)",
-  "description": "Labeled synthetic VS Code editor tests with local additions/deletions counters; does not claim WakaTime stats or coding hours.",
-  "version": "3.0.0",
+  "displayName": "Activity Lab  |  by Albatany",
+  "description": "Simulasi aktivitas editor dengan 32 mode teknologi, 141 profil bahasa, nama proyek kustom, dan laporan lokal. © Albatany 2026.",
+  "version": "4.0.0",
   "publisher": "localdev",
   "license": "MIT",
   "private": true,
@@ -29,20 +29,23 @@
     "commands": [
       {
         "command": "activityLab.start",
-        "title": "Activity Lab: Start Synthetic Session"
+        "title": "Activity Lab: Mulai Simulasi"
       },
       {
         "command": "activityLab.stop",
-        "title": "Activity Lab: Stop Session"
+        "title": "Activity Lab: Hentikan Simulasi"
       },
       {
         "command": "activityLab.status",
-        "title": "Activity Lab: Show Session Status"
+        "title": "Activity Lab: Lihat Status"
       }
     ]
   },
   "scripts": {
     "check": "node --check extension.js",
-    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/mock-vscode-integration.js"
+    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/mock-vscode-integration.js"
+  },
+  "author": {
+    "name": "Albatany"
   }
 }
