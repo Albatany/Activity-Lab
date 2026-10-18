@@ -10,8 +10,6 @@
 ![VS Code](https://img.shields.io/badge/VS%20Code-1.85%2B-2563eb?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-0f766e?style=for-the-badge)
 
-**© Albatany 2026**
-
 </div>
 
 ---
