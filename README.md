@@ -123,7 +123,7 @@ session-2026-10-17T12-00-00-000Z-a1b2c3/
 
 Mode profesi adalah **tema pilihan bahasa dan file** untuk eksperimen. Memilih mode tertentu tidak berarti penggunanya memiliki keterampilan atau jabatan tersebut.
 
-## ◇ Kompatibilitas pencatat aktivitas
+## Kompatibilitas pencatat aktivitas
 
 Activity Lab menggunakan `workspace.applyEdit()` dan penyimpanan dokumen melalui API VS Code. Akibatnya, extension lain **mungkin dapat mengamati event perubahan dokumen** jika mereka berlangganan event terkait.
 
