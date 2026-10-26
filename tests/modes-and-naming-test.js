@@ -18,8 +18,8 @@ for (let i = 0; i < 150; i++) {
   assert(!name.startsWith('demo_') || names.size > 0);
 }
 assert.equal(names.size, 150);
-assert.equal(validateProjectName('Riset Analitik 2026'), null);
-assert.equal(validateProjectName('Nama Proyek AI'), null);
+assert.equal(validateProjectName('Analytics Research 2026'), null);
+assert.equal(validateProjectName('AI Research Project'), null);
 assert(validateProjectName('bad\ninjection'));
 assert(validateProjectName('../private'));
 assert(validateProjectName('A'.repeat(70)));

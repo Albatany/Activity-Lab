@@ -1,8 +1,8 @@
 {
   "name": "activity-lab-synthetic",
-  "displayName": "Activity Lab  |  by Albatany",
-  "description": "Simulasi aktivitas editor dengan 32 mode teknologi, 141 profil bahasa, nama proyek kustom, dan laporan lokal. © Albatany 2026.",
-  "version": "4.0.0",
+  "displayName": "Activity Lab | by Albatany",
+  "description": "A sandboxed VS Code editor activity simulator with 141 file profiles, multi-language selection, saved presets, 32 curated modes, and local reports. \u00a9 Albatany 2026.",
+  "version": "5.0.0",
   "publisher": "localdev",
   "license": "MIT",
   "private": true,
@@ -17,33 +17,41 @@
     "activity",
     "editor",
     "extension-testing",
-    "languages"
+    "languages",
+    "multi-language",
+    "language-presets",
+    "custom-profiles"
   ],
   "main": "./extension.js",
   "activationEvents": [
     "onCommand:activityLab.start",
     "onCommand:activityLab.stop",
-    "onCommand:activityLab.status"
+    "onCommand:activityLab.status",
+    "onCommand:activityLab.presets"
   ],
   "contributes": {
     "commands": [
       {
         "command": "activityLab.start",
-        "title": "Activity Lab: Mulai Simulasi"
+        "title": "Activity Lab: Start Simulation"
       },
       {
         "command": "activityLab.stop",
-        "title": "Activity Lab: Hentikan Simulasi"
+        "title": "Activity Lab: Stop Simulation"
       },
       {
         "command": "activityLab.status",
-        "title": "Activity Lab: Lihat Status"
+        "title": "Activity Lab: Session Status"
+      },
+      {
+        "command": "activityLab.presets",
+        "title": "Activity Lab: Manage Language Presets"
       }
     ]
   },
   "scripts": {
-    "check": "node --check extension.js",
-    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/mock-vscode-integration.js"
+    "check": "node --check extension.js && node --check languageSelection.js && node --check modes.js",
+    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/language-selection-test.js && node tests/mock-vscode-integration.js"
   },
   "author": {
     "name": "Albatany"

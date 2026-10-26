@@ -1,16 +1,16 @@
-# Berkontribusi ke Activity Lab
+# Contributing to Activity Lab
 
-Terima kasih sudah tertarik membantu! Kami menerima issue, saran pengalaman pengguna, pengujian Windows/Linux, dan pull request untuk meningkatkan stabilitas simulator.
+Thanks for helping improve Activity Lab! We welcome bug reports, accessibility improvements, new language file profiles, test cases, and cross-platform compatibility fixes.
 
-## Alur kontribusi
+## Workflow
 
-1. Buat issue singkat yang menjelaskan masalah atau ide.
-2. Buat branch terpisah untuk perubahan.
-3. Jalankan `npm test` dan `npm run check` sebelum mengirim pull request.
-4. Jelaskan perilaku yang diuji dan sertakan log yang tidak mengandung data pribadi.
+1. Open an issue describing the problem or proposed enhancement.
+2. Create a separate branch for your change.
+3. Run `npm test` and `npm run check` before opening a pull request.
+4. Explain what changed and include safe reproduction steps where useful.
 
-## Prinsip proyek
+## Project principles
 
-Activity Lab adalah simulator editor untuk pengujian lokal. Jangan menambahkan fitur pemalsuan heartbeat, pengambilalihan API key, penyamaran identitas pengguna, atau klaim statistik server tanpa bukti. Selalu beri label jelas pada aktivitas yang dihasilkan secara otomatis.
+Activity Lab is explicitly a **synthetic editor playground**. Keep automatic edits isolated and clearly labeled. Do not add API key collection, heartbeat falsification, attempts to bypass analytics rules, or unsupported claims about external tracking statistics.
 
 © Albatany 2026

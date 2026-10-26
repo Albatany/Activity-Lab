@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const Module = require('node:module');
-const root = fs.mkdtempSync(path.join(os.tmpdir(), 'activitylab-v3-test-'));
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'activitylab-v5-test-'));
 const commands = new Map();
 const allTimers = [];
 const origInterval = global.setInterval;
@@ -14,6 +14,7 @@ const ORIGINAL_HOME = os.homedir;
 os.homedir = () => root;
 let scenario = 'sql';
 let ratio = 'balanced';
+const persisted = new Map();
 const events = [];
 
 global.setInterval = (fn, ms) => { const timer = { fn, ms, active: true }; allTimers.push(timer); return timer; };
@@ -67,17 +68,28 @@ const vscode = {
   },
   window: {
     createStatusBarItem() { return { text:'',tooltip:'',command:'',show() {},dispose() {} }; },
-    async showQuickPick(items) {
+    async showQuickPick(items, options = {}) {
       const labels = items.map(x => typeof x === 'string' ? x : x.label);
-      if (labels.some(x=>x.includes('Bahasa tunggal'))) return items.find(x => scenario==='stack' ? x.kind==='mode' : x.kind==='local');
-      if (labels.includes('Full Stack Developer')) return items.find(x => x.label==='Full Stack Developer');
-      if (labels.includes('SQL')) return items.find(x=>x.label === (scenario==='json' ? 'JSON' : scenario==='python' ? 'Python' : 'SQL'));
-      if (labels.some(x=>x.startsWith('Seimbang 1:1'))) return items.find(x=>x.data.id===ratio);
-      if (labels.includes('5 menit')) return items.find(x=>x.label === (scenario==='stack' ? '8 jam' : 'Jalankan sampai saya hentikan'));
-      if (labels.includes('15 detik')) return items[0];
+      if (labels.some(x => x.includes('Choose multiple languages'))) {
+        if (scenario === 'stack') return items.find(x => x.kind === 'mode');
+        if (scenario === 'multi') return items.find(x => x.kind === 'multiple');
+        if (scenario === 'preset') return items.find(x => x.kind === 'presets');
+        return items.find(x => x.kind === 'local');
+      }
+      if (options.canPickMany) return ['Python', 'SQL', 'Bash', 'Markdown'].map(name => items.find(x => x.label === name));
+      if (labels.includes('Use this selection')) return items.find(x => x.action === 'save');
+      if (labels.includes('My Data Stack')) return items.find(x => x.label === 'My Data Stack');
+      if (labels.includes('Full Stack Developer')) return items.find(x => x.label === 'Full Stack Developer');
+      if (labels.includes('SQL')) return items.find(x => x.label === (scenario === 'json' ? 'JSON' : scenario === 'python' ? 'Python' : 'SQL'));
+      if (labels.some(x => x.startsWith('Balanced 1:1'))) return items.find(x => x.data.id === ratio);
+      if (labels.includes('5 minutes')) return items.find(x => x.label === (scenario === 'stack' ? '8 hours' : 'Until I stop'));
+      if (labels.includes('15 seconds')) return items[0];
       return items[0];
     },
-    async showInputBox() { return scenario === 'stack' ? 'Riset Analitik 2026' : ''; },
+    async showInputBox(options={}) {
+      if (options.title === 'Name your language preset') return 'My Data Stack';
+      return scenario === 'stack' ? 'Analytics Research 2026' : '';
+    },
     async showWarningMessage(_,__,confirm) { return confirm; },
     async showInformationMessage() {},
     async showErrorMessage(msg) { throw Error(String(msg)); },
@@ -88,10 +100,11 @@ Module._load = function(name,...rest) { return name === 'vscode' ? vscode : orig
 const sleep = ms => new Promise(resolve=>setTimeout(resolve,ms));
 async function main() {
   const ext = require('../extension');
-  ext.activate({ subscriptions: [] });
+  ext.activate({ subscriptions: [], globalState: { get: (key, fallback) => persisted.has(key) ? persisted.get(key) : fallback, async update(key, value) { persisted.set(key, value); } } });
   assert(commands.has('activityLab.start'));
   assert(commands.has('activityLab.stop'));
   assert(commands.has('activityLab.status'));
+  assert(commands.has('activityLab.presets'));
 
   scenario = 'sql';
   ratio = 'balanced';
@@ -152,17 +165,41 @@ async function main() {
   folder=path.join(root,'.vscode-activity-lab',sessionFolders.sort().at(-1));
   const generatedFiles = fs.readdirSync(folder).filter(x=>/_[0-9a-f]{6}\.[\w.+-]+$/.test(x));
   assert(generatedFiles.length >= 8, `full stack files: ${generatedFiles.length}`);
-  assert.equal(fs.readFileSync(path.join(folder, '.wakatime-project'),'utf8'), 'Riset Analitik 2026\n');
+  assert.equal(fs.readFileSync(path.join(folder, '.wakatime-project'),'utf8'), 'Analytics Research 2026\n');
   timer = allTimers.find(x=>x.active && x.ms===15000);
   assert(timer);
   await timer.fn(); await sleep(50);
   assert(events.filter(x=>x==='open-editor').length>=4, 'rotation opens distinct files');
   await commands.get('activityLab.stop')();
-  assert.equal(JSON.parse(fs.readFileSync(path.join(folder, 'session-report.json'),'utf8')).project, 'Riset Analitik 2026');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(folder, 'session-report.json'),'utf8')).project, 'Analytics Research 2026');
+  assert(allTimers.every(x=>!x.active));
+
+  // v5: choose four independent languages with the native multi-select picker.
+  scenario='multi'; ratio='more';
+  await commands.get('activityLab.start')(); await sleep(70);
+  sessionFolders=fs.readdirSync(path.join(root,'.vscode-activity-lab')).filter(x=>x.startsWith('session-'));
+  folder=path.join(root,'.vscode-activity-lab',sessionFolders.sort().at(-1));
+  let created=fs.readdirSync(folder);
+  for (const extension of ['.py', '.sql', '.sh', '.md']) assert(created.some(name=>name.endsWith(extension)), extension);
+  await commands.get('activityLab.stop')();
+  report=JSON.parse(fs.readFileSync(path.join(folder,'session-report.json'),'utf8'));
+  assert.equal(report.selection_type,'multi_select');
+  assert.deepEqual(report.selected_languages, ['Python', 'SQL', 'Bash', 'Markdown']);
+  assert(persisted.size >= 2, 'last selection and saved preset');
+
+  // Reusing a preset must create the same exact language combination.
+  scenario='preset'; ratio='balanced';
+  await commands.get('activityLab.start')(); await sleep(70);
+  sessionFolders=fs.readdirSync(path.join(root,'.vscode-activity-lab')).filter(x=>x.startsWith('session-'));
+  folder=path.join(root,'.vscode-activity-lab',sessionFolders.sort().at(-1));
+  await commands.get('activityLab.stop')();
+  report=JSON.parse(fs.readFileSync(path.join(folder,'session-report.json'),'utf8'));
+  assert.equal(report.selection_type,'preset');
+  assert.deepEqual(report.selected_languages, ['Python', 'SQL', 'Bash', 'Markdown']);
   assert(allTimers.every(x=>!x.active));
   ext.deactivate();
   assert(events.filter(x=>x==='save').length >= 3);
-  console.log('PASS: balanced 1:1, additions 4:1, JSON 8:1, indefinite sessions, 8-hour stack, reports, start/status/stop.');
+  console.log('PASS: 1:1, 4:1, JSON 8:1, indefinite sessions, 8-hour stack, custom multi-select, saved preset, reports and commands.');
 }
 main().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>{
   os.homedir = ORIGINAL_HOME;
