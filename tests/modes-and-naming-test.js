@@ -2,7 +2,7 @@
 const assert = require('node:assert/strict');
 const catalog = require('../languages.json');
 const { MODES, resolveModes } = require('../modes');
-const { buildFileName, validateProjectName } = require('../fileNaming');
+const { buildFileName } = require('../fileNaming');
 const modes = resolveModes(MODES, catalog);
 assert(modes.length >= 30, 'At least 30 profession modes');
 assert.equal(new Set(modes.map(m => m.title)).size, modes.length);
@@ -18,9 +18,4 @@ for (let i = 0; i < 150; i++) {
   assert(!name.startsWith('demo_') || names.size > 0);
 }
 assert.equal(names.size, 150);
-assert.equal(validateProjectName('Analytics Research 2026'), null);
-assert.equal(validateProjectName('AI Research Project'), null);
-assert(validateProjectName('bad\ninjection'));
-assert(validateProjectName('../private'));
-assert(validateProjectName('A'.repeat(70)));
-console.log(`PASS: ${modes.length} curated modes, distinct randomized names, safe custom project names.`);
+console.log(`PASS: ${modes.length} curated modes, distinct randomized names, randomized scratch filenames.`);

@@ -1,9 +1,7 @@
 # Security Policy
 
-Activity Lab never asks for WakaTime API keys, GitHub tokens, or account passwords. Its optional network feature retrieves only the public WakaTime programming language catalog.
+Activity Lab runs a local editor sandbox. It does not request account credentials, API keys, or passwords, and it does not transmit generated files or session reports to external activity services.
 
-Do not publish secrets or sensitive user data in public issues. Report potential security concerns privately through a secure contact channel listed on the repository maintainer's GitHub profile if one is provided.
+Please report vulnerabilities privately to the repository owner before public disclosure. Include the affected platform, operating system, reproduction steps, and relevant logs with personal paths or secrets removed.
 
-Install VSIX files only from trusted releases. Session files are written under a dedicated folder in your home directory and are not connected to your existing development project.
-
-© Albatany 2026
+© Albatany 2026.

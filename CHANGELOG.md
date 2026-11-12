@@ -1,70 +1,30 @@
 # Changelog
 
-All notable changes to Activity Lab are recorded here. This history describes **extension functionality**, not verified activity recorded by WakaTime or another tracking service.
+## 6.1.0 — Standalone Edition
 
-## [5.0.0] — 2026-10-24
+- Removed all external-tracker code, endpoints, online catalog lookup, plugin inspection, project markers, UI labels, diagnostics, and report fields.
+- Removed optional project-name override from VS Code and IntelliJ editions.
+- Retained the bundled offline language profiles, curated professional modes, Saved Languages, custom file profiles, randomized filenames, local edit patterns, timed/indefinite sessions, pause/resume, local counters, and JSON reports.
+- Preserved the IntelliJ foreground/background scheduler without any external tracker references.
+- Corrected the IntelliJ standalone cleanup by removing a stale document/save-event status reference that belonged to the former tracker-diagnostics path; no IDE event tracking is performed.
+- Added the Arduino Uno companion bundle with local Arduino CLI compile/upload helpers.
+- Updated documentation and release packaging for standalone operation.
 
-### Added
+## 6.0.2 — IntelliJ Background Scheduler
 
-* **Custom Language Selection** with a searchable, multi-select picker for any combination of the 141 built in file profiles.
-* Selection validation and deduplication, with up to 48 file profiles per session to reduce editor overhead.
-* **Saved language presets** with descriptive names, persistent local VS Code storage, and a dedicated preset management command.
-* Remembered selection for convenience when opening the multi-select picker again.
-* `selection_type` and `selected_languages` fields in local session reports.
-* Automated tests for multi-select, saved presets, English menus, and major regression scenarios.
+- Added an option to continue local simulation steps while IntelliJ IDEA is inactive.
+- Separated running, waiting, and manually paused time in local session state.
+- Kept the original session deadline when waiting or paused; missed steps are not replayed.
+- Kept editor tabs unchanged during background steps.
 
-### Changed
+## 6.0.1 — IntelliJ Session Reliability
 
-* **Complete English interface**, including the Command Palette, prompts, confirmation dialogs, status bar, safety notices, and session folder labels.
-* Rewritten English README, getting started guide, privacy information, troubleshooting guide, and release instructions for international users.
-* Translated the descriptions and categories for all 32 curated technology modes, plus line change labels and validation messages.
-* Improved menu order by prioritizing custom language selection.
+- Added foreground-aware scheduling, local session-state reporting, and improved editor operations.
+- Added tests for background scheduling, preset state, and editor file behaviour.
 
-### Preserved
+## 6.0.0 — Multi-language Sessions
 
-* All 32 profession-based tracks, the 141 offline profiles, optional online catalog, project labeling, randomized filenames, change patterns, eight-hour duration cap, and Until I Stop mode.
-* The original extension identifier, `localdev.activity-lab-synthetic`, allowing an in-place VSIX update.
-* Sandboxed file edits and local reports explicitly marked as synthetic.
+- Added the IntelliJ edition, multi-language sessions, professional modes, Saved Languages, presets, local reports, and custom file profiles.
+- Added durations up to eight hours and Until I Stop.
 
-### Compatibility
-
-* A saved language preset is stored locally in the current VS Code installation and is not automatically synced across computers.
-* Session metrics remain **local simulation counts**, not proof of WakaTime heartbeat acceptance.
-
-## [4.0.0] — 2026-10-17
-
-### Added
-
-* 32 technology-oriented modes covering software engineering, data, AI, cybersecurity, cloud, and systems.
-* Optional project naming through `.wakatime-project` inside the sandbox.
-* Randomized, context-aware scratch filenames and expanded report metadata.
-* Repository documentation, contributor guidance, security policy, MIT license, and CI tests.
-
-### Changed
-
-* More polished status messages and Bahasa Indonesia controls for the v4 interface.
-
-## [3.0.0]
-
-### Added
-
-* Three synthetic change patterns: balanced 1:1, additions favored 4:1, and high growth 8:1.
-* Local line change counters, report generation, and scratch file safety limits.
-
-## [2.0.0]
-
-### Added
-
-* 141 built in language and file profiles, from Assembly and SQL to Bash, Markdown, Python, Rust, and TypeScript.
-* Full Stack rotation, optional online WakaTime language catalog, and custom file type configuration.
-* Session durations up to eight hours and Until I Stop.
-
-## [1.0.0]
-
-### Added
-
-* Initial Windows and Linux VS Code sandbox activity simulator.
-* Twelve built in profiles, Start, Stop, and Status commands, and adjustable session settings.
-* Synthetic scratch files and project labeling.
-
-**© Albatany 2026**
+© Albatany 2026.

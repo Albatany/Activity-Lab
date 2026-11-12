@@ -42,12 +42,4 @@ function buildFileName(language, reserved, chooser = crypto.randomInt) {
   }
   throw new Error('Could not reserve a unique scratch file name');
 }
-function validateProjectName(name) {
-  const value = (name || '').trim();
-  if (!value) return null;
-  if (value.length > 64 || !/^[\p{L}\p{N}][\p{L}\p{N} _().+]{0,63}$/u.test(value)) {
-    return 'Use 1 to 64 characters: letters, numbers, spaces, underscores, periods, or parentheses.';
-  }
-  return null;
-}
-module.exports = { STEMS, GENERIC, buildFileName, validateProjectName };
+module.exports = { STEMS, GENERIC, buildFileName };

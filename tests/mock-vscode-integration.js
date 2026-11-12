@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const Module = require('node:module');
-const root = fs.mkdtempSync(path.join(os.tmpdir(), 'activitylab-v5-test-'));
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'activitylab-v6-test-'));
 const commands = new Map();
 const allTimers = [];
 const origInterval = global.setInterval;
@@ -113,7 +113,6 @@ async function main() {
   let sessionFolders = fs.readdirSync(path.join(root,'.vscode-activity-lab')).filter(x=>x.startsWith('session-'));
   assert.equal(sessionFolders.length,1);
   let folder = path.join(root,'.vscode-activity-lab',sessionFolders[0]);
-  assert.equal(fs.readFileSync(path.join(folder,'.wakatime-project'),'utf8'),'ActivityLab Synthetic\n');
   let filename = fs.readdirSync(folder).find(f=>f.endsWith('.sql'));
   assert(filename);
   let file = path.join(folder, filename);
@@ -127,7 +126,7 @@ async function main() {
   let report = JSON.parse(fs.readFileSync(path.join(folder,'session-report.json'),'utf8'));
   assert.equal(report.synthetic_additions,20);
   assert.equal(report.synthetic_deletions,16);
-  assert.equal(report.wakatime_verified,false);
+  assert(!('project' in report));
   assert(allTimers.every(x=>!x.active));
 
   // 4:1 mode retains net additions and removes only prior generated rows.
@@ -149,7 +148,7 @@ async function main() {
   await commands.get('activityLab.start')(); await sleep(70);
   sessionFolders=fs.readdirSync(path.join(root,'.vscode-activity-lab')).filter(x=>x.startsWith('session-'));
   folder=path.join(root,'.vscode-activity-lab',sessionFolders.sort().at(-1));
-  file=path.join(folder,fs.readdirSync(folder).find(f=>f.endsWith('.json')));
+  file=path.join(folder,fs.readdirSync(folder).find(f=>f.endsWith('.json') && f !== 'session-report.json'));
   timer=allTimers.find(x=>x.active && x.ms===15000);
   for (let i=0;i<2;i++) { await timer.fn(); await sleep(50); }
   assert.equal(JSON.parse(fs.readFileSync(file,'utf8')).entries.length,22);
@@ -165,13 +164,12 @@ async function main() {
   folder=path.join(root,'.vscode-activity-lab',sessionFolders.sort().at(-1));
   const generatedFiles = fs.readdirSync(folder).filter(x=>/_[0-9a-f]{6}\.[\w.+-]+$/.test(x));
   assert(generatedFiles.length >= 8, `full stack files: ${generatedFiles.length}`);
-  assert.equal(fs.readFileSync(path.join(folder, '.wakatime-project'),'utf8'), 'Analytics Research 2026\n');
   timer = allTimers.find(x=>x.active && x.ms===15000);
   assert(timer);
   await timer.fn(); await sleep(50);
   assert(events.filter(x=>x==='open-editor').length>=4, 'rotation opens distinct files');
   await commands.get('activityLab.stop')();
-  assert.equal(JSON.parse(fs.readFileSync(path.join(folder, 'session-report.json'),'utf8')).project, 'Analytics Research 2026');
+  assert(!('project' in JSON.parse(fs.readFileSync(path.join(folder, 'session-report.json'),'utf8'))));
   assert(allTimers.every(x=>!x.active));
 
   // v5: choose four independent languages with the native multi-select picker.

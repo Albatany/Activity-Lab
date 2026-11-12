@@ -1,46 +1,25 @@
 # Getting Started
 
-Welcome to Activity Lab v5.0.0. This is a beginner-friendly guide to experimenting with synthetic editor changes in VS Code.
+Activity Lab is a standalone local sandbox for controlled editor experiments. It generates clearly labelled scratch files in its own session directory and records local counters in `session-report.json`.
 
-## 1. Install the extension
+## Choose an edition
 
-Open VS Code, choose **Extensions**, open the actions menu, select **Install from VSIX...**, and choose the v5 installer. Restart VS Code if prompted.
+- **VS Code:** install the VSIX from `release/`.
+- **IntelliJ IDEA:** install the plugin ZIP from `release/`.
+- **Arduino IDE 2 + Uno:** open the companion `.ino` sketch in Arduino IDE and use the included CLI helper for compile/upload.
 
-## 2. Start your first session
+## First session in VS Code or IntelliJ
 
-Press `Ctrl + Shift + P` and run **Activity Lab: Start Simulation**.
+1. Start **Activity Lab: Start Simulation** (VS Code command palette) or **Activity Lab → Start Simulation** (IntelliJ).
+2. Select one language, several offline profiles, a Saved Languages preset, or a curated professional mode.
+3. Optionally add a custom file profile.
+4. Choose a duration (1–480 minutes) or **Until I Stop**.
+5. Choose an edit pattern and interval.
+6. Start the session. All generated files are created in an Activity Lab sandbox folder.
+7. Pause, resume, stop, or open the local JSON report using the platform controls.
 
-The first menu offers the following choices:
+## Safety and data
 
-| Option | Best for |
-| :--- | :--- |
-| Choose multiple languages | Your own combination of programming or file profiles |
-| Professional modes | A ready-made mix such as Full Stack, AI Engineer, or Data Analyst |
-| Saved language presets | A previously saved custom combination |
-| Single language | One language at a time |
-| WakaTime language catalog | Exploring an optional online list of verified names |
-| Custom file type | An extension and VS Code language mode that you specify |
+Generated edits are synthetic placeholders, not real coding work. They remain in a dedicated local folder. Activity Lab does not use external tracking APIs, collect API keys, inspect other plugins, or upload session reports.
 
-For the new multi-select feature, use the search box and tick the languages you want. Press Enter when done. Save your selection as a preset if you expect to reuse it.
-
-## 3. Configure the session
-
-Enter a custom project name or leave it blank. Choose a duration of 5 minutes up to 8 hours, or **Until I stop**. Select a synthetic line change pattern and edit interval. Read the confirmation message before starting.
-
-## 4. Check output
-
-Activity Lab creates a separate directory inside `~/.vscode-activity-lab/`. Each generated file has a synthetic notice. After stopping, open `session-report.json` to inspect local counts. No actual development project is modified.
-
-## 5. Stop and remove a session
-
-Use **Activity Lab: Stop Simulation** or select the status bar indicator. You may manually delete an old session directory after the session finishes. Never delete your actual project folders.
-
-## What is a saved preset?
-
-It is simply a named list of selected language profiles. It does not contain code, credentials, or data from real projects. A preset is saved in the current VS Code installation and may not be available on other machines.
-
-## Important clarification
-
-A generated edit is not proof of recorded work. WakaTime and other analytics extensions decide independently whether they recognize an event. Activity Lab does not promise external stats or counted hours.
-
-**© Albatany 2026**
+© Albatany 2026.

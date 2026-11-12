@@ -1,0 +1,146 @@
+{
+  "stems": {
+    "python": [
+      "data_pipeline",
+      "model_training",
+      "debugging",
+      "feature_engineering",
+      "test_suite",
+      "service_core",
+      "analytics",
+      "projects"
+    ],
+    "sql": [
+      "database_schema",
+      "query_report",
+      "customer_metrics",
+      "warehouse_models",
+      "data_audit",
+      "projects"
+    ],
+    "shellscript": [
+      "deploy_script",
+      "log_analysis",
+      "bootstrap",
+      "server_check",
+      "debugging",
+      "projects"
+    ],
+    "powershell": [
+      "system_check",
+      "automation",
+      "debugging",
+      "scripts",
+      "projects"
+    ],
+    "typescript": [
+      "api_routes",
+      "app_config",
+      "service_layer",
+      "debugging",
+      "projects",
+      "things"
+    ],
+    "typescriptreact": [
+      "dashboard_view",
+      "component_library",
+      "app_layout",
+      "projects",
+      "things"
+    ],
+    "javascript": [
+      "api_client",
+      "debugging",
+      "event_handler",
+      "projects",
+      "things"
+    ],
+    "javascriptreact": [
+      "component_library",
+      "dashboard_view",
+      "projects",
+      "things"
+    ],
+    "markdown": [
+      "architecture_notes",
+      "project_notes",
+      "research_log",
+      "things",
+      "projects"
+    ],
+    "yaml": [
+      "pipeline_config",
+      "environment_config",
+      "deployment_rules",
+      "projects"
+    ],
+    "json": [
+      "app_settings",
+      "response_schema",
+      "debugging",
+      "project_config"
+    ],
+    "dockerfile": [
+      "container_build",
+      "service_image",
+      "projects"
+    ],
+    "asm": [
+      "memory_layout",
+      "register_notes",
+      "debugging",
+      "projects"
+    ],
+    "go": [
+      "service_handler",
+      "internal_tools",
+      "data_collector",
+      "debugging",
+      "projects"
+    ],
+    "rust": [
+      "service_core",
+      "memory_safety",
+      "compiler_notes",
+      "projects"
+    ],
+    "html": [
+      "app_layout",
+      "landing_page",
+      "ui_prototype",
+      "projects"
+    ],
+    "css": [
+      "layout_styles",
+      "design_system",
+      "component_theme",
+      "projects"
+    ],
+    "r": [
+      "statistical_report",
+      "exploratory_analysis",
+      "data_cleaning",
+      "projects"
+    ],
+    "cpp": [
+      "engine_core",
+      "debugging",
+      "algorithm_study",
+      "projects"
+    ]
+  },
+  "generic": [
+    "demo",
+    "debugging",
+    "projects",
+    "things",
+    "experiment",
+    "sandbox",
+    "workflow",
+    "prototype",
+    "module",
+    "utils",
+    "research",
+    "notes"
+  ]
+}

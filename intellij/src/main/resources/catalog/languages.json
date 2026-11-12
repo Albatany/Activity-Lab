@@ -1,0 +1,989 @@
+[
+  {
+    "label": "ABAP",
+    "id": "abap",
+    "ext": ".abap",
+    "category": "Legacy & enterprise",
+    "comment": "quote"
+  },
+  {
+    "label": "Ada",
+    "id": "ada",
+    "ext": ".adb",
+    "category": "Legacy & enterprise",
+    "comment": "dash"
+  },
+  {
+    "label": "Angular Template",
+    "id": "html",
+    "ext": ".html",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "Ansible (YAML)",
+    "id": "yaml",
+    "ext": ".yml",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "Apex",
+    "id": "apex",
+    "ext": ".cls",
+    "category": "Legacy & enterprise",
+    "comment": "slash"
+  },
+  {
+    "label": "AsciiDoc",
+    "id": "asciidoc",
+    "ext": ".adoc",
+    "category": "Docs & config",
+    "comment": "slash"
+  },
+  {
+    "label": "Assembly (GNU/GAS)",
+    "id": "asm",
+    "ext": ".s",
+    "category": "Systems & low-level",
+    "comment": "hash"
+  },
+  {
+    "label": "Assembly (x86/NASM)",
+    "id": "asm",
+    "ext": ".asm",
+    "category": "Systems & low-level",
+    "comment": "semi"
+  },
+  {
+    "label": "Astro",
+    "id": "astro",
+    "ext": ".astro",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "Bash",
+    "id": "shellscript",
+    "ext": ".sh",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "Batch / CMD",
+    "id": "bat",
+    "ext": ".bat",
+    "category": "Shell & DevOps",
+    "comment": "rem"
+  },
+  {
+    "label": "BibTeX",
+    "id": "bibtex",
+    "ext": ".bib",
+    "category": "Docs & config",
+    "comment": "percent"
+  },
+  {
+    "label": "Brainfuck",
+    "id": "brainfuck",
+    "ext": ".bf",
+    "category": "Esoteric",
+    "comment": "hash"
+  },
+  {
+    "label": "C",
+    "id": "c",
+    "ext": ".c",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "C#",
+    "id": "csharp",
+    "ext": ".cs",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "C++",
+    "id": "cpp",
+    "ext": ".cpp",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "Clojure",
+    "id": "clojure",
+    "ext": ".clj",
+    "category": "Functional & scripting",
+    "comment": "semi"
+  },
+  {
+    "label": "CMake",
+    "id": "cmake",
+    "ext": ".cmake",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "COBOL",
+    "id": "cobol",
+    "ext": ".cbl",
+    "category": "Legacy & enterprise",
+    "comment": "star"
+  },
+  {
+    "label": "CoffeeScript",
+    "id": "coffeescript",
+    "ext": ".coffee",
+    "category": "Web & frontend",
+    "comment": "hash"
+  },
+  {
+    "label": "Common Lisp",
+    "id": "lisp",
+    "ext": ".lisp",
+    "category": "Functional & scripting",
+    "comment": "semi"
+  },
+  {
+    "label": "Containerfile",
+    "id": "dockerfile",
+    "ext": ".Containerfile",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "Crystal",
+    "id": "crystal",
+    "ext": ".cr",
+    "category": "Backend & full-stack",
+    "comment": "hash"
+  },
+  {
+    "label": "CSS",
+    "id": "css",
+    "ext": ".css",
+    "category": "Web & frontend",
+    "comment": "css"
+  },
+  {
+    "label": "CSV",
+    "id": "csv",
+    "ext": ".csv",
+    "category": "Docs & config",
+    "comment": "csv"
+  },
+  {
+    "label": "Cypher",
+    "id": "cypher",
+    "ext": ".cypher",
+    "category": "Data & database",
+    "comment": "sql"
+  },
+  {
+    "label": "D",
+    "id": "d",
+    "ext": ".d",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "Dart",
+    "id": "dart",
+    "ext": ".dart",
+    "category": "Mobile & apps",
+    "comment": "slash"
+  },
+  {
+    "label": "Delphi",
+    "id": "pascal",
+    "ext": ".dpr",
+    "category": "Legacy & enterprise",
+    "comment": "brace"
+  },
+  {
+    "label": "Diff",
+    "id": "diff",
+    "ext": ".diff",
+    "category": "Docs & config",
+    "comment": "hash"
+  },
+  {
+    "label": "Dockerfile",
+    "id": "dockerfile",
+    "ext": ".Dockerfile",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "EJS",
+    "id": "html",
+    "ext": ".ejs",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "Elixir",
+    "id": "elixir",
+    "ext": ".ex",
+    "category": "Backend & full-stack",
+    "comment": "hash"
+  },
+  {
+    "label": "Elm",
+    "id": "elm",
+    "ext": ".elm",
+    "category": "Web & frontend",
+    "comment": "dash"
+  },
+  {
+    "label": "Emacs Lisp",
+    "id": "lisp",
+    "ext": ".el",
+    "category": "Functional & scripting",
+    "comment": "semi"
+  },
+  {
+    "label": "Erlang",
+    "id": "erlang",
+    "ext": ".erl",
+    "category": "Functional & scripting",
+    "comment": "percent"
+  },
+  {
+    "label": "F#",
+    "id": "fsharp",
+    "ext": ".fs",
+    "category": "Functional & scripting",
+    "comment": "slash"
+  },
+  {
+    "label": "Fish",
+    "id": "fish",
+    "ext": ".fish",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "Flutter (Dart)",
+    "id": "dart",
+    "ext": ".dart",
+    "category": "Mobile & apps",
+    "comment": "slash"
+  },
+  {
+    "label": "Forth",
+    "id": "forth",
+    "ext": ".fs",
+    "category": "Functional & scripting",
+    "comment": "paren"
+  },
+  {
+    "label": "Fortran",
+    "id": "fortran",
+    "ext": ".f90",
+    "category": "Science & data",
+    "comment": "bang"
+  },
+  {
+    "label": "GDScript",
+    "id": "gdscript",
+    "ext": ".gd",
+    "category": "Gaming & creative",
+    "comment": "hash"
+  },
+  {
+    "label": "Git Config",
+    "id": "ini",
+    "ext": ".gitconfig",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "GLSL",
+    "id": "glsl",
+    "ext": ".glsl",
+    "category": "Gaming & creative",
+    "comment": "slash"
+  },
+  {
+    "label": "Go",
+    "id": "go",
+    "ext": ".go",
+    "category": "Backend & full-stack",
+    "comment": "slash"
+  },
+  {
+    "label": "GraphQL",
+    "id": "graphql",
+    "ext": ".graphql",
+    "category": "Data & database",
+    "comment": "hash"
+  },
+  {
+    "label": "Groovy",
+    "id": "groovy",
+    "ext": ".groovy",
+    "category": "Backend & full-stack",
+    "comment": "slash"
+  },
+  {
+    "label": "Handlebars",
+    "id": "handlebars",
+    "ext": ".hbs",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "Haskell",
+    "id": "haskell",
+    "ext": ".hs",
+    "category": "Functional & scripting",
+    "comment": "dash"
+  },
+  {
+    "label": "HCL / Terraform",
+    "id": "terraform",
+    "ext": ".tf",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "HLSL",
+    "id": "hlsl",
+    "ext": ".hlsl",
+    "category": "Gaming & creative",
+    "comment": "slash"
+  },
+  {
+    "label": "HTML",
+    "id": "html",
+    "ext": ".html",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "INI",
+    "id": "ini",
+    "ext": ".ini",
+    "category": "Docs & config",
+    "comment": "semi"
+  },
+  {
+    "label": "Java",
+    "id": "java",
+    "ext": ".java",
+    "category": "Backend & full-stack",
+    "comment": "slash"
+  },
+  {
+    "label": "JavaScript",
+    "id": "javascript",
+    "ext": ".js",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "JavaScript (React JSX)",
+    "id": "javascriptreact",
+    "ext": ".jsx",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "Jinja",
+    "id": "jinja",
+    "ext": ".jinja",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "JSON",
+    "id": "json",
+    "ext": ".json",
+    "category": "Docs & config",
+    "comment": "json"
+  },
+  {
+    "label": "JSON with Comments",
+    "id": "jsonc",
+    "ext": ".jsonc",
+    "category": "Docs & config",
+    "comment": "slash"
+  },
+  {
+    "label": "JSON5",
+    "id": "json5",
+    "ext": ".json5",
+    "category": "Docs & config",
+    "comment": "slash"
+  },
+  {
+    "label": "Julia",
+    "id": "julia",
+    "ext": ".jl",
+    "category": "Science & data",
+    "comment": "hash"
+  },
+  {
+    "label": "Kotlin",
+    "id": "kotlin",
+    "ext": ".kt",
+    "category": "Mobile & apps",
+    "comment": "slash"
+  },
+  {
+    "label": "LaTeX",
+    "id": "latex",
+    "ext": ".tex",
+    "category": "Docs & config",
+    "comment": "percent"
+  },
+  {
+    "label": "Less",
+    "id": "less",
+    "ext": ".less",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "Liquid",
+    "id": "liquid",
+    "ext": ".liquid",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "Lua",
+    "id": "lua",
+    "ext": ".lua",
+    "category": "Functional & scripting",
+    "comment": "dash"
+  },
+  {
+    "label": "Luau",
+    "id": "luau",
+    "ext": ".luau",
+    "category": "Gaming & creative",
+    "comment": "dash"
+  },
+  {
+    "label": "Makefile",
+    "id": "makefile",
+    "ext": ".mk",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "Markdown",
+    "id": "markdown",
+    "ext": ".md",
+    "category": "Docs & config",
+    "comment": "markdown"
+  },
+  {
+    "label": "MATLAB",
+    "id": "matlab",
+    "ext": ".m",
+    "category": "Science & data",
+    "comment": "percent"
+  },
+  {
+    "label": "MDX",
+    "id": "mdx",
+    "ext": ".mdx",
+    "category": "Docs & config",
+    "comment": "markdown"
+  },
+  {
+    "label": "MongoDB Query (JS)",
+    "id": "javascript",
+    "ext": ".js",
+    "category": "Data & database",
+    "comment": "slash"
+  },
+  {
+    "label": "Move",
+    "id": "move",
+    "ext": ".move",
+    "category": "Blockchain & web3",
+    "comment": "slash"
+  },
+  {
+    "label": "MySQL (SQL)",
+    "id": "sql",
+    "ext": ".mysql",
+    "category": "Data & database",
+    "comment": "sql"
+  },
+  {
+    "label": "Nim",
+    "id": "nim",
+    "ext": ".nim",
+    "category": "Systems & low-level",
+    "comment": "hash"
+  },
+  {
+    "label": "Nix",
+    "id": "nix",
+    "ext": ".nix",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "Objective-C",
+    "id": "objective-c",
+    "ext": ".m",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "Objective-C++",
+    "id": "objective-cpp",
+    "ext": ".mm",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "OCaml",
+    "id": "ocaml",
+    "ext": ".ml",
+    "category": "Functional & scripting",
+    "comment": "paren"
+  },
+  {
+    "label": "Octave",
+    "id": "octave",
+    "ext": ".m",
+    "category": "Science & data",
+    "comment": "percent"
+  },
+  {
+    "label": "Odin",
+    "id": "odin",
+    "ext": ".odin",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "OpenAPI (YAML)",
+    "id": "yaml",
+    "ext": ".yaml",
+    "category": "Docs & config",
+    "comment": "hash"
+  },
+  {
+    "label": "Pascal",
+    "id": "pascal",
+    "ext": ".pas",
+    "category": "Legacy & enterprise",
+    "comment": "brace"
+  },
+  {
+    "label": "Patch",
+    "id": "diff",
+    "ext": ".patch",
+    "category": "Docs & config",
+    "comment": "hash"
+  },
+  {
+    "label": "Perl",
+    "id": "perl",
+    "ext": ".pl",
+    "category": "Functional & scripting",
+    "comment": "hash"
+  },
+  {
+    "label": "PHP",
+    "id": "php",
+    "ext": ".php",
+    "category": "Backend & full-stack",
+    "comment": "slash"
+  },
+  {
+    "label": "PL/SQL",
+    "id": "sql",
+    "ext": ".pls",
+    "category": "Data & database",
+    "comment": "sql"
+  },
+  {
+    "label": "PostgreSQL (SQL)",
+    "id": "sql",
+    "ext": ".psql",
+    "category": "Data & database",
+    "comment": "sql"
+  },
+  {
+    "label": "PowerShell",
+    "id": "powershell",
+    "ext": ".ps1",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "Prisma Schema",
+    "id": "prisma",
+    "ext": ".prisma",
+    "category": "Data & database",
+    "comment": "slash"
+  },
+  {
+    "label": "Prolog",
+    "id": "prolog",
+    "ext": ".pl",
+    "category": "Functional & scripting",
+    "comment": "percent"
+  },
+  {
+    "label": "Protocol Buffers",
+    "id": "proto3",
+    "ext": ".proto",
+    "category": "Docs & config",
+    "comment": "slash"
+  },
+  {
+    "label": "Pug",
+    "id": "pug",
+    "ext": ".pug",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "PureScript",
+    "id": "purescript",
+    "ext": ".purs",
+    "category": "Web & frontend",
+    "comment": "dash"
+  },
+  {
+    "label": "Python",
+    "id": "python",
+    "ext": ".py",
+    "category": "Backend & full-stack",
+    "comment": "hash"
+  },
+  {
+    "label": "QML",
+    "id": "qml",
+    "ext": ".qml",
+    "category": "Mobile & apps",
+    "comment": "slash"
+  },
+  {
+    "label": "R",
+    "id": "r",
+    "ext": ".r",
+    "category": "Science & data",
+    "comment": "hash"
+  },
+  {
+    "label": "Racket",
+    "id": "racket",
+    "ext": ".rkt",
+    "category": "Functional & scripting",
+    "comment": "semi"
+  },
+  {
+    "label": "Reason",
+    "id": "reason",
+    "ext": ".re",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "Regular Expression",
+    "id": "regexp",
+    "ext": ".regex",
+    "category": "Docs & config",
+    "comment": "hash"
+  },
+  {
+    "label": "ReScript",
+    "id": "rescript",
+    "ext": ".res",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "reStructuredText",
+    "id": "restructuredtext",
+    "ext": ".rst",
+    "category": "Docs & config",
+    "comment": "hash"
+  },
+  {
+    "label": "Ruby",
+    "id": "ruby",
+    "ext": ".rb",
+    "category": "Backend & full-stack",
+    "comment": "hash"
+  },
+  {
+    "label": "Rust",
+    "id": "rust",
+    "ext": ".rs",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "SAS",
+    "id": "sas",
+    "ext": ".sas",
+    "category": "Science & data",
+    "comment": "slash"
+  },
+  {
+    "label": "Sass",
+    "id": "sass",
+    "ext": ".sass",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "Scala",
+    "id": "scala",
+    "ext": ".scala",
+    "category": "Backend & full-stack",
+    "comment": "slash"
+  },
+  {
+    "label": "Scheme",
+    "id": "scheme",
+    "ext": ".scm",
+    "category": "Functional & scripting",
+    "comment": "semi"
+  },
+  {
+    "label": "SCSS",
+    "id": "scss",
+    "ext": ".scss",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "ShaderLab",
+    "id": "shaderlab",
+    "ext": ".shader",
+    "category": "Gaming & creative",
+    "comment": "slash"
+  },
+  {
+    "label": "Smalltalk",
+    "id": "smalltalk",
+    "ext": ".st",
+    "category": "Functional & scripting",
+    "comment": "quote"
+  },
+  {
+    "label": "Solidity",
+    "id": "solidity",
+    "ext": ".sol",
+    "category": "Blockchain & web3",
+    "comment": "slash"
+  },
+  {
+    "label": "SPARQL",
+    "id": "sparql",
+    "ext": ".rq",
+    "category": "Data & database",
+    "comment": "hash"
+  },
+  {
+    "label": "SQL",
+    "id": "sql",
+    "ext": ".sql",
+    "category": "Data & database",
+    "comment": "sql"
+  },
+  {
+    "label": "SQLite (SQL)",
+    "id": "sql",
+    "ext": ".sql",
+    "category": "Data & database",
+    "comment": "sql"
+  },
+  {
+    "label": "Stata",
+    "id": "stata",
+    "ext": ".do",
+    "category": "Science & data",
+    "comment": "star"
+  },
+  {
+    "label": "Svelte",
+    "id": "svelte",
+    "ext": ".svelte",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "Swift",
+    "id": "swift",
+    "ext": ".swift",
+    "category": "Mobile & apps",
+    "comment": "slash"
+  },
+  {
+    "label": "SystemVerilog",
+    "id": "systemverilog",
+    "ext": ".sv",
+    "category": "Hardware & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "T-SQL",
+    "id": "sql",
+    "ext": ".tsql",
+    "category": "Data & database",
+    "comment": "sql"
+  },
+  {
+    "label": "Tcl",
+    "id": "tcl",
+    "ext": ".tcl",
+    "category": "Functional & scripting",
+    "comment": "hash"
+  },
+  {
+    "label": "Thrift",
+    "id": "thrift",
+    "ext": ".thrift",
+    "category": "Docs & config",
+    "comment": "slash"
+  },
+  {
+    "label": "TOML",
+    "id": "toml",
+    "ext": ".toml",
+    "category": "Docs & config",
+    "comment": "hash"
+  },
+  {
+    "label": "Twig",
+    "id": "twig",
+    "ext": ".twig",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "TypeScript",
+    "id": "typescript",
+    "ext": ".ts",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "TypeScript (React TSX)",
+    "id": "typescriptreact",
+    "ext": ".tsx",
+    "category": "Web & frontend",
+    "comment": "slash"
+  },
+  {
+    "label": "V",
+    "id": "v",
+    "ext": ".v",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "Vagrantfile (Ruby)",
+    "id": "ruby",
+    "ext": ".rb",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  },
+  {
+    "label": "VBA",
+    "id": "vb",
+    "ext": ".bas",
+    "category": "Legacy & enterprise",
+    "comment": "quote"
+  },
+  {
+    "label": "Verilog",
+    "id": "verilog",
+    "ext": ".v",
+    "category": "Hardware & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "VHDL",
+    "id": "vhdl",
+    "ext": ".vhd",
+    "category": "Hardware & low-level",
+    "comment": "dash"
+  },
+  {
+    "label": "Visual Basic",
+    "id": "vb",
+    "ext": ".vb",
+    "category": "Legacy & enterprise",
+    "comment": "quote"
+  },
+  {
+    "label": "Vue",
+    "id": "vue",
+    "ext": ".vue",
+    "category": "Web & frontend",
+    "comment": "html"
+  },
+  {
+    "label": "Vyper",
+    "id": "vyper",
+    "ext": ".vy",
+    "category": "Blockchain & web3",
+    "comment": "hash"
+  },
+  {
+    "label": "WebAssembly (WAT)",
+    "id": "wat",
+    "ext": ".wat",
+    "category": "Systems & low-level",
+    "comment": "semi"
+  },
+  {
+    "label": "WGSL",
+    "id": "wgsl",
+    "ext": ".wgsl",
+    "category": "Gaming & creative",
+    "comment": "slash"
+  },
+  {
+    "label": "Whitespace",
+    "id": "plaintext",
+    "ext": ".ws",
+    "category": "Esoteric",
+    "comment": "hash"
+  },
+  {
+    "label": "XML",
+    "id": "xml",
+    "ext": ".xml",
+    "category": "Docs & config",
+    "comment": "xml"
+  },
+  {
+    "label": "YAML",
+    "id": "yaml",
+    "ext": ".yaml",
+    "category": "Docs & config",
+    "comment": "hash"
+  },
+  {
+    "label": "Zig",
+    "id": "zig",
+    "ext": ".zig",
+    "category": "Systems & low-level",
+    "comment": "slash"
+  },
+  {
+    "label": "Zsh",
+    "id": "shellscript",
+    "ext": ".zsh",
+    "category": "Shell & DevOps",
+    "comment": "hash"
+  }
+]

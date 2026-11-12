@@ -1,35 +1,32 @@
 # Troubleshooting
 
-## Activity Lab commands do not appear
+## VS Code extension does not appear
 
-Open the Extensions panel and verify that Activity Lab is enabled. Reload VS Code and try `Ctrl + Shift + P` again. If you upgraded from an older release, reinstall the v5 VSIX with `--force` and reload.
+Confirm that the `.vsix` file was installed through **Extensions → ... → Install from VSIX...** and reload the window. Check **Developer: Show Running Extensions** for activation errors.
 
-## Multi-select seems empty
+## IntelliJ plugin fails to load
 
-Type a common language, such as Python or SQL. The catalog is bundled with the extension and works offline. You must select at least one profile. To avoid excess editor overhead, each session is limited to 48 selected profiles.
+Confirm the plugin ZIP is the installable `activity-lab-intellij-6.1.0.zip`, not the outer source archive. Check **Help → Show Log in Explorer/Finder** for plugin loading errors and verify that your IDE build is compatible with the plugin's declared baseline.
 
-## A saved preset is missing
+## Session stops unexpectedly
 
-Presets are stored locally in the current VS Code installation, not in the repository or generated session directory. Presets do not automatically transfer between VS Code profiles, Windows, or Linux.
+Activity Lab stops when a generated scratch file is changed outside its expected content, the configured size limit is reached, an editor operation fails, or the session duration expires. Manually changed files are preserved.
 
-## A language appears as Plain Text
+## Arduino CLI is not found
 
-Your VS Code installation may not include the requested syntax mode. File extensions help language detection but do not guarantee it. Install a relevant syntax extension if you need syntax highlighting for that file type.
+Install Arduino CLI and add it to `PATH`, or set `ARDUINO_CLI` to the full executable path. Run `arduino-cli version` to verify.
 
-## The optional online catalog cannot load
+## Arduino board not listed
 
-The WakaTime API may be unavailable or your network may block it. Use the 141 built in profiles instead; those require no internet connection.
+Use `arduino-cli board list`, try another USB data cable or port, and confirm the OS has permission to access the serial device. Select the exact port manually when running the upload helper.
 
-## The session ends unexpectedly
+## Arduino compile/upload fails
 
-Open the error notification. Activity Lab intentionally stops when a scratch file changes unexpectedly, the VS Code extension host closes, or the session reaches its configured duration or safety limits. Check the generated folder under your home directory.
+Confirm `arduino:avr` is installed (`arduino-cli core list`), the board is an Uno, and the sketch folder contains `ActivityLabUno.ino`. Compile first and inspect the complete CLI output before attempting upload.
 
-## WakaTime does not show the expected time or language
+© Albatany 2026.
 
-This is not a verified tracking integration. WakaTime decides whether and how to accept editor events, and Activity Lab does not directly submit heartbeats. Synthetic line counts are not equivalent to server statistics. Use the official WakaTime extension documentation for supported metrics.
 
-## Uninstall
+### IntelliJ builder stops while detecting Java 25
 
-Uninstall Activity Lab from the VS Code Extensions view. Old session directories under `~/.vscode-activity-lab/` are not deleted automatically; remove them manually if no longer needed.
-
-**© Albatany 2026**
+The bundled Gradle wrapper is 9.0.0 and the plugin uses a Java 21 toolchain. Install a full JDK 21 with `winget install EclipseAdoptium.Temurin.21.JDK`, then rerun `Build-IntelliJ.cmd`. The updated builder automatically selects a detected JDK 21 without changing your system-wide Java settings.

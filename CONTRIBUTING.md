@@ -1,16 +1,11 @@
-# Contributing to Activity Lab
+# Contributing
 
-Thanks for helping improve Activity Lab! We welcome bug reports, accessibility improvements, new language file profiles, test cases, and cross-platform compatibility fixes.
+Activity Lab is a standalone local editor-simulation tool. Keep generated edits visibly labelled and isolated to the sandbox directory.
 
-## Workflow
+- Do not add telemetry, external activity-tracking integrations, credential collection, or plugin inspection.
+- Keep language profiles bundled and available offline.
+- Preserve platform feature parity where the host APIs allow it.
+- Do not claim synthetic counters are real coding work or verified time-tracking results.
+- Add or update tests for session timing, file safety, reports, and platform-specific behaviour.
 
-1. Open an issue describing the problem or proposed enhancement.
-2. Create a separate branch for your change.
-3. Run `npm test` and `npm run check` before opening a pull request.
-4. Explain what changed and include safe reproduction steps where useful.
-
-## Project principles
-
-Activity Lab is explicitly a **synthetic editor playground**. Keep automatic edits isolated and clearly labeled. Do not add API key collection, heartbeat falsification, attempts to bypass analytics rules, or unsupported claims about external tracking statistics.
-
-© Albatany 2026
+© Albatany 2026.

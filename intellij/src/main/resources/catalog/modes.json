@@ -1,0 +1,449 @@
+[
+  {
+    "title": "Full Stack Developer",
+    "category": "Application Development",
+    "summary": "Frontend, APIs, databases, and deployment",
+    "languages": [
+      "HTML",
+      "CSS",
+      "JavaScript (React JSX)",
+      "TypeScript (React TSX)",
+      "Python",
+      "SQL",
+      "Dockerfile",
+      "YAML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Frontend Engineer",
+    "category": "Application Development",
+    "summary": "Interfaces, components, and accessibility",
+    "languages": [
+      "HTML",
+      "CSS",
+      "SCSS",
+      "TypeScript",
+      "TypeScript (React TSX)",
+      "Vue",
+      "Svelte",
+      "JSON",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Backend Engineer",
+    "category": "Application Development",
+    "summary": "Services, data schemas, and APIs",
+    "languages": [
+      "Python",
+      "Go",
+      "Java",
+      "TypeScript",
+      "PostgreSQL (SQL)",
+      "GraphQL",
+      "Dockerfile",
+      "YAML"
+    ]
+  },
+  {
+    "title": "API Developer",
+    "category": "Application Development",
+    "summary": "Service contracts, endpoints, and testing",
+    "languages": [
+      "TypeScript",
+      "Python",
+      "Go",
+      "OpenAPI (YAML)",
+      "GraphQL",
+      "JSON",
+      "SQL",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Mobile Developer",
+    "category": "Application Development",
+    "summary": "Android, iOS, and cross-platform applications",
+    "languages": [
+      "Kotlin",
+      "Swift",
+      "Flutter (Dart)",
+      "JSON",
+      "XML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Desktop Application Developer",
+    "category": "Application Development",
+    "summary": "Desktop software and system integration",
+    "languages": [
+      "C#",
+      "C++",
+      "Rust",
+      "TypeScript",
+      "Python",
+      "JSON",
+      "XML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Game Developer",
+    "category": "Application Development",
+    "summary": "Gameplay, scripting, and shaders",
+    "languages": [
+      "C#",
+      "C++",
+      "GDScript",
+      "Lua",
+      "GLSL",
+      "JSON",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Software QA Engineer",
+    "category": "Application Development",
+    "summary": "Test cases, automation, and test reports",
+    "languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "Java",
+      "JSON",
+      "YAML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Data Analyst",
+    "category": "Data and Artificial Intelligence",
+    "summary": "Data exploration, visualization, and reports",
+    "languages": [
+      "Python",
+      "SQL",
+      "R",
+      "CSV",
+      "JSON",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Data Scientist",
+    "category": "Data and Artificial Intelligence",
+    "summary": "Experiments, analysis, and modeling",
+    "languages": [
+      "Python",
+      "R",
+      "Julia",
+      "SQL",
+      "CSV",
+      "YAML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Data Engineer",
+    "category": "Data and Artificial Intelligence",
+    "summary": "ETL, warehousing, and orchestration",
+    "languages": [
+      "Python",
+      "SQL",
+      "Scala",
+      "Bash",
+      "YAML",
+      "JSON",
+      "Dockerfile"
+    ]
+  },
+  {
+    "title": "Analytics Engineer",
+    "category": "Data and Artificial Intelligence",
+    "summary": "Data transformation and analytics models",
+    "languages": [
+      "SQL",
+      "Python",
+      "Jinja",
+      "YAML",
+      "CSV",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "AI Engineer",
+    "category": "Data and Artificial Intelligence",
+    "summary": "AI applications, models, and service integration",
+    "languages": [
+      "Python",
+      "TypeScript",
+      "JSON",
+      "YAML",
+      "SQL",
+      "Dockerfile",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Machine Learning Engineer",
+    "category": "Data and Artificial Intelligence",
+    "summary": "Model training and evaluation pipelines",
+    "languages": [
+      "Python",
+      "C++",
+      "SQL",
+      "YAML",
+      "Bash",
+      "Dockerfile",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "MLOps Engineer",
+    "category": "Data and Artificial Intelligence",
+    "summary": "Model deployment, pipelines, and monitoring",
+    "languages": [
+      "Python",
+      "Bash",
+      "Dockerfile",
+      "YAML",
+      "HCL / Terraform",
+      "SQL",
+      "JSON"
+    ]
+  },
+  {
+    "title": "Natural Language Processing Engineer",
+    "category": "Data and Artificial Intelligence",
+    "summary": "Text processing, language models, and evaluation",
+    "languages": [
+      "Python",
+      "JSON",
+      "CSV",
+      "SQL",
+      "YAML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Computer Vision Engineer",
+    "category": "Data and Artificial Intelligence",
+    "summary": "Image processing and model experiments",
+    "languages": [
+      "Python",
+      "C++",
+      "JSON",
+      "YAML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Cloud Engineer",
+    "category": "Infrastructure and Security",
+    "summary": "Cloud infrastructure and service configuration",
+    "languages": [
+      "HCL / Terraform",
+      "YAML",
+      "Bash",
+      "Python",
+      "Dockerfile",
+      "JSON",
+      "PowerShell"
+    ]
+  },
+  {
+    "title": "DevOps Engineer",
+    "category": "Infrastructure and Security",
+    "summary": "Build systems, CI/CD, and deployment",
+    "languages": [
+      "Bash",
+      "Python",
+      "Go",
+      "Dockerfile",
+      "YAML",
+      "HCL / Terraform",
+      "Makefile"
+    ]
+  },
+  {
+    "title": "Site Reliability Engineer",
+    "category": "Infrastructure and Security",
+    "summary": "Reliability, observability, and automation",
+    "languages": [
+      "Go",
+      "Python",
+      "Bash",
+      "YAML",
+      "HCL / Terraform",
+      "SQL",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Cyber Security Analyst",
+    "category": "Infrastructure and Security",
+    "summary": "Defensive analysis and incident documentation",
+    "languages": [
+      "Python",
+      "Bash",
+      "PowerShell",
+      "YAML",
+      "JSON",
+      "SQL",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Security Engineer",
+    "category": "Infrastructure and Security",
+    "summary": "Configuration, testing, and defensive tools",
+    "languages": [
+      "Python",
+      "Go",
+      "Rust",
+      "Bash",
+      "YAML",
+      "HCL / Terraform",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "DevSecOps Engineer",
+    "category": "Infrastructure and Security",
+    "summary": "Security in delivery pipelines",
+    "languages": [
+      "Python",
+      "Bash",
+      "YAML",
+      "Dockerfile",
+      "HCL / Terraform",
+      "JSON",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Digital Forensics Researcher",
+    "category": "Infrastructure and Security",
+    "summary": "Artifact analysis and forensic reports",
+    "languages": [
+      "Python",
+      "PowerShell",
+      "Bash",
+      "JSON",
+      "CSV",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Network Automation Engineer",
+    "category": "Infrastructure and Security",
+    "summary": "Network configuration and infrastructure automation",
+    "languages": [
+      "Python",
+      "Go",
+      "Bash",
+      "YAML",
+      "JSON",
+      "PowerShell",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Systems Programmer",
+    "category": "Systems and Research",
+    "summary": "Memory, compilers, and low-level programming",
+    "languages": [
+      "Assembly (x86/NASM)",
+      "C",
+      "C++",
+      "Rust",
+      "Zig",
+      "CMake",
+      "Makefile"
+    ]
+  },
+  {
+    "title": "Embedded Systems Engineer",
+    "category": "Systems and Research",
+    "summary": "Firmware, hardware, and protocols",
+    "languages": [
+      "C",
+      "C++",
+      "Rust",
+      "Assembly (GNU/GAS)",
+      "CMake",
+      "Makefile",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Robotics Developer",
+    "category": "Systems and Research",
+    "summary": "Autonomous systems and robotics algorithms",
+    "languages": [
+      "Python",
+      "C++",
+      "CMake",
+      "YAML",
+      "XML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Blockchain Developer",
+    "category": "Systems and Research",
+    "summary": "Smart contracts and Web3 ecosystems",
+    "languages": [
+      "Solidity",
+      "Rust",
+      "TypeScript",
+      "JavaScript",
+      "JSON",
+      "YAML",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Database Engineer",
+    "category": "Systems and Research",
+    "summary": "Queries, indexes, and database schemas",
+    "languages": [
+      "SQL",
+      "PostgreSQL (SQL)",
+      "MySQL (SQL)",
+      "SQLite (SQL)",
+      "PL/SQL",
+      "T-SQL",
+      "Python"
+    ]
+  },
+  {
+    "title": "Scientific Computing Researcher",
+    "category": "Systems and Research",
+    "summary": "Numerical computing and reproducible research",
+    "languages": [
+      "Python",
+      "R",
+      "Julia",
+      "MATLAB",
+      "Fortran",
+      "LaTeX",
+      "Markdown"
+    ]
+  },
+  {
+    "title": "Technical Writer",
+    "category": "Systems and Research",
+    "summary": "Technical guides, API references, and documentation",
+    "languages": [
+      "Markdown",
+      "MDX",
+      "reStructuredText",
+      "AsciiDoc",
+      "OpenAPI (YAML)",
+      "JSON",
+      "HTML"
+    ]
+  }
+]

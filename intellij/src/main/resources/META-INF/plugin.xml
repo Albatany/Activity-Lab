@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>dev.albatany.activitylab</id>
+    <name>Activity Lab</name>
+    <vendor url="https://github.com/Albatany/Activity-Lab">Albatany</vendor>
+    <description><![CDATA[
+        <p>A local editor activity simulator for IntelliJ IDEA.</p>
+        <p>Choose from 141 file profiles and 32 curated modes, save your language
+        combinations, and inspect local session reports in an isolated sandbox.</p>
+        <p>Includes timed sessions, manual stop, pause and resume, three edit patterns, and local session reports.
+        All simulation files stay in an isolated sandbox. No external activity-tracking service is contacted.</p>
+        <p>Developed by Albatany. © Albatany 2026.</p>
+    ]]></description>
+    <change-notes><![CDATA[
+        <p>6.1.0: Standalone edition. Removed online catalog lookup, project-name override, external tracker metadata, and tracker diagnostics. Offline language profiles, saved selections, sandbox sessions, foreground/background controls, and local reports remain.</p>
+    ]]></change-notes>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Activity Lab" anchor="right"
+                    factoryClass="dev.albatany.activitylab.ui.LabToolWindowFactory"/>
+        <notificationGroup id="Activity Lab" displayType="BALLOON"/>
+    </extensions>
+    <actions>
+        <group id="ActivityLab.Menu" text="Activity Lab" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <action id="ActivityLab.Start" class="dev.albatany.activitylab.ui.StartAction" text="Start Simulation"/>
+            <action id="ActivityLab.Pause" class="dev.albatany.activitylab.ui.PauseAction" text="Pause or Resume Simulation"/>
+            <action id="ActivityLab.Stop" class="dev.albatany.activitylab.ui.StopAction" text="Stop Simulation"/>
+            <action id="ActivityLab.Presets" class="dev.albatany.activitylab.ui.PresetsAction" text="Saved Languages"/>
+        </group>
+    </actions>
+</idea-plugin>

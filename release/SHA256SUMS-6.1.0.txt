@@ -1,0 +1,2 @@
+4c0edafb9cfe9eeeea39ef1c6373e161914e96aaed623a155057f80e6fa74449  activity-lab-standalone-6.1.0.vsix
+f6ab335389ff09ec154e214573fb939a11d0abe2531873ca7ae05c347a8ef675  Activity-Lab-Arduino-Companion-6.1.0.zip

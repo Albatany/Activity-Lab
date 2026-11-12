@@ -1,6 +1,6 @@
 'use strict';
 
-// Metrics are LOCAL synthetic operations, not WakaTime server statistics.
+// Counters describe LOCAL synthetic operations only.
 const PATTERNS = Object.freeze({
   balanced: Object.freeze({ id: 'balanced', label: 'Balanced 1:1', description: 'Add four lines and remove up to four earlier lines', additions: 4, deletions: 4 }),
   more: Object.freeze({ id: 'more', label: 'Additions favored 4:1', description: 'Add four lines and remove up to one earlier line', additions: 4, deletions: 1 }),

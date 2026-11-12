@@ -1,31 +1,31 @@
 'use strict';
 
-// Activity Lab is a synthetic editor-behavior test, not a WakaTime heartbeat sender.
-// It does not contact WakaTime with credentials, spoof users/OSes, or report hours.
+// Activity Lab is a standalone local editor-simulation tool.
 const vscode = require('vscode');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const https = require('node:https');
 const LANGUAGES = require('./languages.json');
 const { PATTERNS, buildPlan } = require('./linePatterns');
 const { MODES, resolveModes } = require('./modes');
-const { buildFileName, validateProjectName } = require('./fileNaming');
-const { MAX_SELECTED_LANGUAGES, LAST_SELECTED_KEY, normalizeProfiles, readPresets, savePreset, deletePreset, buildQuickPickItems } = require('./languageSelection');
+const { buildFileName } = require('./fileNaming');
+const { MAX_SELECTED_LANGUAGES, LAST_SELECTED_KEY, normalizeProfiles, validatePresetName, readPresets, savePreset, deletePreset, renamePreset, buildQuickPickItems } = require('./languageSelection');
+const { createSessionClock } = require('./sessionClock');
+const { version: VERSION } = require('./package.json');
 
 const ROOT = path.join(os.homedir(), '.vscode-activity-lab');
-const DEFAULT_PROJECT = 'ActivityLab Synthetic';
 const PROFESSIONAL_MODES = resolveModes(MODES, LANGUAGES);
-const ONLINE_URL = 'https://api.wakatime.com/api/v1/program_languages';
-const CATALOG_PAGES_LIMIT = 100;
 const MAX_FILE_BYTES = 2_000_000;
 const MAX_SESSION_BYTES = 10_000_000;
 const byName = new Map(LANGUAGES.map(l => [l.label.toLowerCase(), l]));
 
 let active = null;
 let statusBar = null;
-let verifiedCatalog = null;
 let extensionState = null;
+let configuring = false;
+let setupGeneration = 0;
+let presetManagerOpen = false;
+let lastFolder = null;
 
 function formatElapsed(ms) {
   const m = Math.max(0, Math.floor(ms / 60000));
@@ -33,16 +33,17 @@ function formatElapsed(ms) {
 }
 function formatStatus() {
   if (!statusBar) return;
-  if (!active?.running) {
+  if (!active) {
     statusBar.text = '$(beaker) Activity Lab · Ready';
     statusBar.tooltip = 'Synthetic editor lab. Select to begin a new session.';
     statusBar.command = 'activityLab.start';
   } else {
     const s = active;
-    const time = s.endsAt === null ? 'Until stopped' : `${Math.max(0, Math.ceil((s.endsAt - Date.now()) / 60000))} min left`;
-    statusBar.text = `$(beaker) Lab +${s.additions} −${s.deletions} · ${time}`;
-    statusBar.tooltip = `ACTIVITY LAB | LOCAL SIMULATION\nProject: ${s.project}\nSelection: ${s.mode}\nLanguage: ${s.currentLanguage?.label || s.languages[0].label}\nTotal languages: ${s.languages.length}\nPattern: ${s.pattern.label}\nSynthetic line changes: +${s.additions} / −${s.deletions}\nElapsed: ${formatElapsed(Date.now()-s.startedAt)}\nNot verified WakaTime metrics\nSelect to stop\n© Albatany 2026`;
-    statusBar.command = 'activityLab.stop';
+    const time = s.endsAt === null ? 'Until stopped' : `${Math.ceil(s.clock.remainingMs() / 60000)} min left`;
+    const state = !s.running ? 'Stopping' : s.paused ? 'Paused' : 'Running';
+    statusBar.text = `$(${s.paused ? 'debug-pause' : 'beaker'}) Lab · ${state} · +${s.additions} −${s.deletions} · ${time}`;
+    statusBar.tooltip = `ACTIVITY LAB | LOCAL SESSION\nState: ${state}\nSelection: ${s.mode}\nLanguage: ${s.currentLanguage?.label || s.languages[0].label}\nTotal languages: ${s.languages.length}\nPattern: ${s.pattern.label}\nSynthetic changes: +${s.additions} / −${s.deletions}\nElapsed: ${formatElapsed(s.clock.elapsedMs())}\nStandalone local simulation\nSelect for session controls\n© Albatany 2026`;
+    statusBar.command = 'activityLab.controls';
   }
   statusBar.show();
 }
@@ -96,8 +97,8 @@ function snippetFor(language, n) {
   const generic = headerFor(language).split('\n')[0];
   return generic.replace('ACTIVITY LAB SIMULATION ONLY — NOT REAL CODING WORK', `synthetic step ${n}`) + '\n';
 }
-// Each generated record is a single placeholder line. All changes are isolated
-// to our scratch folder; actual WakaTime metrics are never inferred here.
+// Each generated record is a single placeholder line. All changes remain isolated
+// to the Activity Lab scratch folder.
 function fullRange(document) {
   return new vscode.Range(document.positionAt(0), document.positionAt(document.getText().length));
 }
@@ -114,6 +115,7 @@ function renderJson(records) {
 }
 async function applyStep(session, file, language) {
   const doc = await vscode.workspace.openTextDocument(file.uri);
+  if (!canEdit(session)) return false;
   const current = doc.getText();
   const expected = file.json ? renderJson(file.records) : file.header + file.records.join('');
   if (current !== expected) throw new Error('A scratch file was edited manually. The session stopped to protect your changes.');
@@ -131,7 +133,7 @@ async function applyStep(session, file, language) {
   const edit = new vscode.WorkspaceEdit();
   if (file.json) {
     // JSON requires serialized object replacement to keep it syntactically valid.
-    // WakaTime might interpret this as one larger replacement operation.
+    // JSON is replaced as a serialized document to keep the scratch file valid.
     edit.replace(file.uri, fullRange(doc), nextText);
   } else {
     if (plan.remove) {
@@ -141,6 +143,7 @@ async function applyStep(session, file, language) {
     }
     edit.insert(file.uri, doc.positionAt(current.length), newRecords.join(''));
   }
+  if (!canEdit(session)) return false;
   if (!await vscode.workspace.applyEdit(edit)) throw new Error('VS Code rejected the scratch file edit.');
   const saved = await vscode.workspace.openTextDocument(file.uri);
   if (!await saved.save()) throw new Error('VS Code could not save the scratch file.');
@@ -150,11 +153,12 @@ async function applyStep(session, file, language) {
   session.additions += plan.add;
   session.deletions += plan.remove;
   session.edits += 1;
+  return true;
 }
 async function showLanguageFile(language, uri) {
   let doc = await vscode.workspace.openTextDocument(uri);
   // File association can be ambiguous. If an installed VS Code grammar exists,
-  // use it; WakaTime may still classify the file differently.
+  // use it; syntax selection is best-effort.
   try {
     if (vscode.languages?.getLanguages && vscode.languages?.setTextDocumentLanguage) {
       const installed = await vscode.languages.getLanguages();
@@ -165,62 +169,140 @@ async function showLanguageFile(language, uri) {
   } catch (_) { /* Keep the document open; language mode is best-effort. */ }
   await vscode.window.showTextDocument(doc, { preview: false, preserveFocus: false });
 }
-async function doStep(session) {
-  if (!session.running || active !== session || session.busy) return;
-  if (session.endsAt !== null && Date.now() >= session.endsAt) {
-    stopSession('Automatic session limit reached.');
-    return;
-  }
+function canEdit(session) {
+  if (!session.running || active !== session || session.paused) return false;
+  if (!session.clock.expired()) return true;
+  void stopSession('Automatic session limit reached.');
+  return false;
+}
+function doStep(session) {
+  if (session.busy || !canEdit(session)) return session.stepPromise;
   session.busy = true;
+  session.stepPromise = performStep(session).finally(() => { session.busy = false; });
+  return session.stepPromise;
+}
+async function performStep(session) {
   try {
     const language = session.languages[session.tick % session.languages.length];
     const file = session.files[language.key];
     if (session.languages.length > 1) await showLanguageFile(language, file.uri);
     session.currentLanguage = language;
+    if (!canEdit(session)) return;
+    if (!await applyStep(session, file, language)) return;
     session.tick += 1;
-    if (!session.running || active !== session) return;
-    await applyStep(session, file, language);
+    saveReport(session);
     formatStatus();
   } catch (error) {
-    stopSession('Stopped due to an editing error.');
+    if (active === session) void stopSession('Stopped due to an editing error.');
     void vscode.window.showErrorMessage(`Activity Lab stopped: ${error.message}`);
-  } finally {
-    session.busy = false;
   }
 }
 function writeReport(session) {
+  const now = Date.now();
   const report = {
     type: 'LOCAL_SYNTHETIC_TEST_REPORT',
-    note: 'Generated from local placeholder operations. NOT verified WakaTime heartbeats, dashboard additions, deletions, or work hours.',
-    project: session.project,
+    extension_version: VERSION,
+    session_state: session.stoppedAt !== null ? 'stopped' : session.paused ? 'paused' : 'running',
+    note: 'Generated from local placeholder operations. This report describes Activity Lab simulation counters, not physical coding work.',
     simulated_mode: session.mode,
     selection_type: session.selectionType || 'curated',
     selected_languages: session.languages.map(language => language.label),
     files: session.languages.map(language => ({ language: language.label, name: session.files[language.key].fileName })),
     platform: process.platform,
     started_at: new Date(session.startedAt).toISOString(),
-    stopped_at: new Date().toISOString(),
+    updated_at: new Date(now).toISOString(),
+    stopped_at: session.stoppedAt === null ? null : new Date(session.stoppedAt).toISOString(),
+    scheduled_end_at: session.endsAt === null ? null : new Date(session.endsAt).toISOString(),
+    stop_reason: session.stopReason || null,
+    pause_count: session.pauseCount,
+    paused_seconds: Math.floor((session.pausedMs + (session.pausedAt === null ? 0 : session.clock.elapsedMs() - session.pausedAt)) / 1000),
     pattern: session.pattern.label,
     synthetic_additions: session.additions,
     synthetic_deletions: session.deletions,
     synthetic_steps: session.edits,
-    elapsed_wall_clock_seconds: Math.floor((Date.now() - session.startedAt) / 1000),
-    wakatime_verified: false
+    elapsed_wall_clock_seconds: Math.max(0, Math.floor((now - session.startedAt) / 1000))
   };
-  fs.writeFileSync(path.join(session.folder, 'session-report.json'), JSON.stringify(report, null, 2) + '\n');
+  const temporary = path.join(session.folder, `.session-report-${require('node:crypto').randomBytes(6).toString('hex')}.tmp`);
+  try {
+    fs.writeFileSync(temporary, JSON.stringify(report, null, 2) + '\n', { flag: 'wx', encoding: 'utf8' });
+    fs.renameSync(temporary, path.join(session.folder, 'session-report.json'));
+  } finally {
+    if (fs.existsSync(temporary)) fs.unlinkSync(temporary);
+  }
+}
+function saveReport(session) {
+  try { writeReport(session); session.reportErrorShown = false; }
+  catch (error) {
+    if (!session.reportErrorShown) void vscode.window.showWarningMessage(`Could not save the Activity Lab report: ${error.message}`);
+    session.reportErrorShown = true;
+  }
 }
 function stopSession(message = 'Synthetic session stopped.') {
+  if (configuring) setupGeneration += 1;
   if (!active) return;
   const previous = active;
+  if (previous.stopPromise) return previous.stopPromise;
   previous.running = false;
   clearInterval(previous.editTimer);
   clearInterval(previous.statusTimer);
-  active = null;
-  try { writeReport(previous); } catch (error) {
-    void vscode.window.showWarningMessage(`Could not save the Activity Lab report: ${error.message}`);
-  }
+  previous.stopReason = message;
   formatStatus();
-  void vscode.window.showInformationMessage(`Session finished. Local synthetic changes: +${previous.additions} / −${previous.deletions}; ${previous.edits} steps over ${formatElapsed(Date.now()-previous.startedAt)}. WakaTime metrics are not verified. Report: ${previous.folder}`);
+  previous.stopPromise = (async () => {
+    // An edit already handed to VS Code may finish; include it in the final report.
+    await previous.stepPromise;
+    previous.stoppedAt = Date.now();
+    finishPause(previous);
+    saveReport(previous);
+    if (active === previous) active = null;
+    formatStatus();
+    void vscode.window.showInformationMessage(`${message} Local synthetic changes: +${previous.additions} / −${previous.deletions}; ${previous.edits} steps over ${formatElapsed(previous.clock.elapsedMs())}. Report: ${previous.folder}`);
+  })();
+  return previous.stopPromise;
+}
+function finishPause(session) {
+  if (session.pausedAt !== null) session.pausedMs += session.clock.elapsedMs() - session.pausedAt;
+  session.pausedAt = null;
+}
+async function pauseSession() {
+  const session = active;
+  if (!session?.running || session.paused) return;
+  if (session.clock.expired()) return stopSession('Session time limit reached.');
+  session.paused = true;
+  session.pausedAt = session.clock.elapsedMs();
+  session.pauseCount += 1;
+  formatStatus();
+  await session.stepPromise;
+  if (active === session && session.running) saveReport(session);
+}
+function resumeSession() {
+  const session = active;
+  if (!session?.running || !session.paused) return;
+  if (session.clock.expired()) return stopSession('Session time limit reached.');
+  finishPause(session);
+  session.paused = false;
+  saveReport(session);
+  formatStatus();
+  return doStep(session);
+}
+async function openReport() {
+  const folder = active?.folder || lastFolder;
+  if (!folder) return void vscode.window.showInformationMessage('Start a session first to create a local report.');
+  try {
+    const doc = await vscode.workspace.openTextDocument(vscode.Uri.file(path.join(folder, 'session-report.json')));
+    await vscode.window.showTextDocument(doc, { preview: false, preserveFocus: false });
+  } catch (error) { void vscode.window.showWarningMessage(`Could not open the session report: ${error.message}`); }
+}
+async function showControls() {
+  const session = active;
+  if (!session) return startSession();
+  const choice = await vscode.window.showQuickPick([
+    { label: session.paused ? 'Resume simulation' : 'Pause simulation', action: session.paused ? 'resume' : 'pause' },
+    { label: 'Session status', action: 'status' },
+    { label: 'Open session report', action: 'report' },
+    { label: 'Stop simulation', action: 'stop' }
+  ], { title: 'Activity Lab | Session controls', placeHolder: 'Paused time counts toward the scheduled end time.' });
+  if (!choice || active !== session) return;
+  return ({ pause: pauseSession, resume: resumeSession, status: showStatus, report: openReport, stop: stopSession })[choice.action]();
 }
 async function inputCustomLanguage(name = null) {
   const label = name || await vscode.window.showInputBox({
@@ -236,41 +318,10 @@ async function inputCustomLanguage(name = null) {
   const installed = vscode.languages?.getLanguages ? await vscode.languages.getLanguages() : ['plaintext'];
   const modes = [...new Set(['plaintext', ...installed])].sort().map(id => ({ label: id, id }));
   const picked = await vscode.window.showQuickPick(modes, {
-    title: 'VS Code syntax mode', placeHolder: 'A file extension does not guarantee how tracking tools classify a language.'
+    title: 'VS Code syntax mode', placeHolder: 'Choose the syntax mode used to display this file in VS Code.'
   });
   if (!picked) return null;
   return { label: label.trim().slice(0, 80), id: picked.id, ext, category: 'Custom file profile', comment: 'hash' };
-}
-function fetchJson(url) {
-  return new Promise((resolve, reject) => {
-    const req = https.get(url, { timeout: 12000, headers: { 'Accept': 'application/json', 'User-Agent': 'ActivityLab/5.0 (verified languages only)' } }, res => {
-      if (res.statusCode !== 200) { res.resume(); return reject(new Error(`WakaTime returned HTTP ${res.statusCode}`)); }
-      let body = '';
-      res.setEncoding('utf8');
-      res.on('data', chunk => { body += chunk; if (body.length > 3_000_000) req.destroy(new Error('Catalog response exceeded the size limit')); });
-      res.on('end', () => { try { resolve(JSON.parse(body)); } catch (e) { reject(e); } });
-      res.on('error', reject);
-    });
-    req.on('timeout', () => req.destroy(new Error('WakaTime language catalog did not respond')));
-    req.on('error', reject);
-  });
-}
-async function onlineLanguages() {
-  if (verifiedCatalog) return verifiedCatalog;
-  const names = new Map();
-  const first = await fetchJson(ONLINE_URL + '?page=1');
-  const pages = Number(first.total_pages || 1);
-  if (!Number.isInteger(pages) || pages > CATALOG_PAGES_LIMIT) {
-    throw new Error(`The online catalog exceeds the ${CATALOG_PAGES_LIMIT}-page safety limit.`);
-  }
-  function add(response) {
-    if (!Array.isArray(response.data)) throw new Error('Unexpected WakaTime API response format.');
-    for (const item of response.data) if (item?.name && item.is_verified !== false) names.set(item.name.toLowerCase(), item.name);
-  }
-  add(first);
-  for (let page = 2; page <= pages; page++) add(await fetchJson(ONLINE_URL + `?page=${page}`));
-  verifiedCatalog = [...names.values()].sort((a,b) => a.localeCompare(b));
-  return verifiedCatalog;
 }
 async function saveSelectedAsPreset(profiles) {
   if (!extensionState?.update) return true;
@@ -282,19 +333,20 @@ async function saveSelectedAsPreset(profiles) {
   if (action.action === 'save') {
     const name = await vscode.window.showInputBox({
       title: 'Name your language preset', placeHolder: 'My Web Stack',
-      validateInput: text => {
-        const value = (text || '').trim();
-        if (!value || value.length > 40 || !/^[\p{L}\p{N}][\p{L}\p{N} _().+]{0,39}$/u.test(value))
-          return 'Use 1 to 40 letters, numbers, spaces, or underscores.';
-        return undefined;
-      }
+      validateInput: text => validatePresetName(text) || undefined
     });
     if (name === undefined) return false;
     try {
+      const existing = readPresets(extensionState, LANGUAGES).find(entry => entry.name.toLowerCase() === name.trim().toLowerCase());
+      if (existing) {
+        const replace = await vscode.window.showWarningMessage(`Replace the languages in "${existing.name}"?`, { modal: true }, 'Replace preset');
+        if (replace !== 'Replace preset') return false;
+      }
       await savePreset(extensionState, LANGUAGES, name, profiles);
       void vscode.window.showInformationMessage(`Saved language preset: ${name.trim()}`);
     } catch (error) {
       void vscode.window.showWarningMessage(`Could not save preset: ${error.message}`);
+      return false;
     }
   }
   return true;
@@ -330,12 +382,48 @@ async function pickSavedPreset() {
   return { languages: normalizeProfiles(chosen.preset.languages, LANGUAGES), mode: `Preset: ${chosen.preset.name}`, selectionType: 'preset' };
 }
 async function managePresets() {
+  if (presetManagerOpen) return;
+  presetManagerOpen = true;
+  try { await editPreset(); }
+  catch (error) { void vscode.window.showWarningMessage(`Could not update Saved Languages: ${error.message}`); }
+  finally { presetManagerOpen = false; }
+}
+async function editPreset() {
   const saved = readPresets(extensionState, LANGUAGES);
   if (!saved.length) return void vscode.window.showInformationMessage('No saved language presets to manage.');
   const chosen = await vscode.window.showQuickPick(saved.map(entry => ({
     label: entry.name, description: `${entry.languages.length} languages`, detail: entry.languages.join(', '), entry
-  })), { title: 'Manage language presets', placeHolder: 'Choose a preset to delete', matchOnDetail: true });
+  })), { title: 'Saved Languages', placeHolder: 'Choose a preset to rename, edit, or delete', matchOnDetail: true });
   if (!chosen) return;
+  const action = await vscode.window.showQuickPick([
+    { label: 'Rename preset', action: 'rename' },
+    { label: 'Edit languages', action: 'edit' },
+    { label: 'Delete preset', action: 'delete' }
+  ], { title: chosen.entry.name });
+  if (!action) return;
+  if (action.action === 'rename') {
+    const name = await vscode.window.showInputBox({
+      title: 'Rename language preset', value: chosen.entry.name,
+      validateInput: text => validatePresetName(text) || undefined
+    });
+    if (name === undefined) return;
+    await renamePreset(extensionState, LANGUAGES, chosen.entry.name, name);
+    void vscode.window.showInformationMessage(`Renamed preset: ${name.trim()}`);
+    return;
+  }
+  if (action.action === 'edit') {
+    const selected = await vscode.window.showQuickPick(buildQuickPickItems(LANGUAGES, chosen.entry.languages), {
+      title: 'Edit saved languages', placeHolder: `Select up to ${MAX_SELECTED_LANGUAGES} languages`,
+      canPickMany: true, matchOnDescription: true, matchOnDetail: true, ignoreFocusOut: true
+    });
+    if (!selected) return;
+    const profiles = normalizeProfiles(selected.map(item => item.profile), LANGUAGES);
+    const answer = await vscode.window.showWarningMessage(`Replace the languages in "${chosen.entry.name}"?`, { modal: true }, 'Replace preset');
+    if (answer !== 'Replace preset') return;
+    await savePreset(extensionState, LANGUAGES, chosen.entry.name, profiles);
+    void vscode.window.showInformationMessage(`Updated preset: ${chosen.entry.name}`);
+    return;
+  }
   const answer = await vscode.window.showWarningMessage(
     `Delete the saved preset "${chosen.entry.name}"? No scratch files will be removed.`, { modal: true }, 'Delete preset'
   );
@@ -347,9 +435,8 @@ async function pickLanguages() {
   const type = await vscode.window.showQuickPick([
     { label: '$(checklist) Choose multiple languages', description: `Select your own combination from ${LANGUAGES.length} built-in profiles`, kind: 'multiple' },
     { label: '$(layers) Professional modes', description: `${PROFESSIONAL_MODES.length} curated technology tracks`, kind: 'mode' },
-    { label: '$(bookmark) Saved language presets', description: 'Reuse a selection you created earlier', kind: 'presets' },
+    { label: '$(bookmark) Saved Languages', description: 'Reuse a selection you created earlier', kind: 'presets' },
     { label: '$(code) Single language', description: 'One language or file profile', kind: 'local' },
-    { label: '$(cloud-download) WakaTime language catalog', description: 'Optional online list; unrecognized files require mapping', kind: 'online' },
     { label: '$(settings-gear) Custom file type', description: 'Provide a file extension and VS Code syntax mode', kind: 'custom' }
   ], { title: 'Activity Lab | Choose a simulation type', placeHolder: 'Pick your languages or start from a curated mode' });
   if (!type) return null;
@@ -366,36 +453,10 @@ async function pickLanguages() {
     const choice = await inputCustomLanguage();
     return choice ? { languages: [choice], mode: 'Custom File Type', selectionType: 'custom' } : null;
   }
-  if (type.kind === 'online') {
-    try {
-      const names = await onlineLanguages();
-      const picked = await vscode.window.showQuickPick(names.map(label => ({
-        label, description: byName.has(label.toLowerCase()) ? 'Built-in file profile' : 'Requires file extension mapping'
-      })), { title: 'WakaTime verified language catalog',
-        placeHolder: `Choose one of ${names.length} catalog entries`, matchOnDescription: true });
-      if (!picked) return null;
-      const known = byName.get(picked.label.toLowerCase());
-      if (known) return { languages: [known], mode: 'WakaTime Catalog', selectionType: 'online' };
-      const custom = await inputCustomLanguage(picked.label);
-      return custom ? { languages: [custom], mode: 'Online Custom File Type', selectionType: 'online' } : null;
-    } catch (error) {
-      void vscode.window.showWarningMessage(`WakaTime catalog unavailable: ${error.message}. Use built-in profiles instead.`);
-      return null;
-    }
-  }
   const choice = await vscode.window.showQuickPick(LANGUAGES.map(item => ({
     label: item.label, description: `${item.category} · ${item.ext}`, data: item
   })), { title: 'Single language', placeHolder: `Search ${LANGUAGES.length} built-in profiles`, matchOnDescription: true });
   return choice ? { languages: [choice.data], mode: 'Single Language', selectionType: 'single' } : null;
-}
-async function pickProjectName() {
-  const name = await vscode.window.showInputBox({
-    title: 'Project name | Optional',
-    prompt: 'Writes a .wakatime-project marker inside the sandbox. Tracker statistics are not guaranteed.',
-    placeHolder: 'Example: Analytics Research 2026', value: '', validateInput: validateProjectName
-  });
-  if (name === undefined) return undefined;
-  return name.trim() || DEFAULT_PROJECT;
 }
 async function pickDuration() {
   const durations = [
@@ -425,14 +486,21 @@ async function pickDuration() {
 async function pickPattern() {
   const picked = await vscode.window.showQuickPick(Object.values(PATTERNS).map(pattern => ({
     label: pattern.label, description: pattern.description, data: pattern
-  })), { title: 'Synthetic line change pattern', placeHolder: 'Local simulation counters, not WakaTime totals' });
+  })), { title: 'Synthetic line change pattern', placeHolder: 'Local simulation counters' });
   return picked?.data || null;
 }
 async function startSession() {
-  if (active?.running) {
-    void vscode.window.showWarningMessage('A session is already running. Stop it before starting another one.');
+  if (active || configuring) {
+    void vscode.window.showWarningMessage('A session is already running or being configured. Finish or stop it before starting another one.');
     return;
   }
+  configuring = true;
+  const generation = ++setupGeneration;
+  try { await configureSession(generation); }
+  catch (error) { void vscode.window.showErrorMessage(`Could not configure Activity Lab: ${error.message}`); }
+  finally { configuring = false; }
+}
+async function configureSession(generation) {
   const choice = await pickLanguages();
   if (!choice?.languages?.length) return;
   const selected = choice.languages;
@@ -440,8 +508,6 @@ async function startSession() {
     void vscode.window.showWarningMessage(`Select up to ${MAX_SELECTED_LANGUAGES} languages per session.`);
     return;
   }
-  const project = await pickProjectName();
-  if (project === undefined) return;
   const minutes = await pickDuration();
   if (minutes === undefined) return;
   const pattern = await pickPattern();
@@ -449,20 +515,17 @@ async function startSession() {
   const interval = await vscode.window.showQuickPick([15,30,60,120].map(seconds => ({ label: `${seconds} seconds`, description: 'Pause between edits', seconds })), { title: 'Edit interval', placeHolder: 'How often should the sandbox file change?' });
   if (!interval) return;
   const confirm = await vscode.window.showWarningMessage(
-    `This session generates synthetic editor changes, not actual coding work. WakaTime and other tracking extensions may ignore these events.\n\nProject: ${project}\nSelection: ${choice.mode}\nLanguages: ${selected.length}\nDuration: ${minutes === null ? 'Until I stop' : `${minutes} minutes`}\nPattern: ${pattern.label}`,
+    `This session generates synthetic editor changes in an isolated local sandbox. It does not represent actual coding work.\n\nSelection: ${choice.mode}\nLanguages: ${selected.length}\nDuration: ${minutes === null ? 'Until I stop' : `${minutes} minutes`}\nPattern: ${pattern.label}`,
     { modal: true }, 'Start simulation'
   );
-  if (confirm !== 'Start simulation') return;
+  if (confirm !== 'Start simulation' || generation !== setupGeneration) return;
 
   try {
     fs.mkdirSync(ROOT, { recursive: true });
     if (fs.lstatSync(ROOT).isSymbolicLink()) throw new Error('The simulation root folder cannot be a symbolic link.');
-    // Keep the root explicitly synthetic; each session has its own project override.
-    fs.writeFileSync(path.join(ROOT, '.wakatime-project'), DEFAULT_PROJECT + '\n');
     const folder = path.join(ROOT, `session-${new Date().toISOString().replace(/[:.]/g,'-')}-${require('node:crypto').randomBytes(3).toString('hex')}`);
     fs.mkdirSync(folder, { recursive: false });
-    fs.writeFileSync(path.join(folder, '.wakatime-project'), project + '\n');
-    fs.writeFileSync(path.join(folder, 'ABOUT_SIMULATION.txt'), 'Activity Lab by Albatany\n\nThis folder contains synthetic test files. It does not represent real coding work, professional experience, or verified time-tracking statistics.\n© Albatany 2026\n');
+    fs.writeFileSync(path.join(folder, 'ABOUT_SIMULATION.txt'), 'Activity Lab by Albatany\n\nThis folder contains local synthetic test files. It does not represent real coding work or professional experience.\nNo external activity-tracking service is contacted by Activity Lab.\n© Albatany 2026\n');
     const files = {};
     const reserved = new Set();
     const langs = selected.map((lang, index) => ({ ...lang, key: `${index}` }));
@@ -476,52 +539,56 @@ async function startSession() {
       files[lang.key] = { uri: vscode.Uri.file(file), fileName, header, json, records: [] };
     }
     await showLanguageFile(langs[0], files[langs[0].key].uri);
-    const startedAt = Date.now();
+    if (generation !== setupGeneration) return;
+    const clock = createSessionClock(minutes);
+    const startedAt = clock.startedAt;
     const session = {
-      folder, project, mode: choice.mode, selectionType: choice.selectionType, languages: langs, files, currentLanguage: langs[0], startedAt, pattern,
-      endsAt: minutes === null ? null : startedAt + minutes*60*1000,
+      folder, mode: choice.mode, selectionType: choice.selectionType, languages: langs, files, currentLanguage: langs[0], startedAt, pattern,
+      clock, endsAt: clock.endsAt, stoppedAt: null, stopReason: null,
+      paused: false, pauseCount: 0, pausedMs: 0, pausedAt: null,
       running: true, busy: false, tick: 0, edits: 0, additions: 0, deletions: 0, sequence: 0,
       totalBytes: langs.reduce((n, lang) => n + Buffer.byteLength(lang.comment === 'json' ? renderJson([]) : headerFor(lang), 'utf8'), 0),
-      editTimer: null, statusTimer: null
+      editTimer: null, statusTimer: null, stepPromise: null, stopPromise: null
     };
     active = session;
+    lastFolder = folder;
+    saveReport(session);
     formatStatus();
-    session.editTimer = setInterval(() => { void doStep(session); }, interval.seconds * 1000);
+    session.editTimer = setInterval(() => doStep(session), interval.seconds * 1000);
     session.statusTimer = setInterval(() => {
-      if (session.endsAt !== null && Date.now() >= session.endsAt) stopSession('Session time limit reached.');
+      if (active !== session || !session.running) return;
+      if (session.clock.expired()) return stopSession('Session time limit reached.');
       else formatStatus();
     }, 10000);
     void doStep(session);
-    void vscode.window.showInformationMessage(`Activity Lab started. Project: ${project}. Sandbox: ${folder}`);
+    void vscode.window.showInformationMessage(`Activity Lab started. Sandbox: ${folder}`);
   } catch (error) {
-    if (active?.running) stopSession('Setup error.');
+    if (active?.running) await stopSession('Setup error.');
     void vscode.window.showErrorMessage(`Could not start Activity Lab: ${error.message}`);
   }
 }
 function showStatus() {
   if (!active?.running) return void vscode.window.showInformationMessage('Activity Lab is not currently running a session.');
   const s = active;
-  const limit = s.endsAt === null ? 'Until manually stopped' : `${Math.max(0, Math.ceil((s.endsAt-Date.now())/60000))} minutes remaining`;
-  void vscode.window.showInformationMessage(`Local simulation · ${s.project} · ${s.mode} · ${s.languages.length} languages · +${s.additions} / −${s.deletions} lines · ${s.edits} steps · ${formatElapsed(Date.now()-s.startedAt)} · ${limit}. WakaTime metrics not verified. Folder: ${s.folder}`);
+  const limit = s.endsAt === null ? 'Until manually stopped' : `${Math.ceil(s.clock.remainingMs()/60000)} minutes remaining`;
+  void vscode.window.showInformationMessage(`Local simulation · ${s.paused ? 'Paused' : 'Running'} · ${s.mode} · ${s.languages.length} languages · +${s.additions} / −${s.deletions} records · ${s.edits} steps · ${formatElapsed(s.clock.elapsedMs())} · ${limit}. Folder: ${s.folder}`);
 }
 function activate(context) {
   extensionState = context.globalState || null;
   statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
   context.subscriptions.push(statusBar);
   context.subscriptions.push(vscode.commands.registerCommand('activityLab.start', startSession));
-  context.subscriptions.push(vscode.commands.registerCommand('activityLab.stop', () => active ? stopSession() : showStatus()));
+  context.subscriptions.push(vscode.commands.registerCommand('activityLab.stop', () => active || configuring ? stopSession() : showStatus()));
+  context.subscriptions.push(vscode.commands.registerCommand('activityLab.pause', pauseSession));
+  context.subscriptions.push(vscode.commands.registerCommand('activityLab.resume', resumeSession));
+  context.subscriptions.push(vscode.commands.registerCommand('activityLab.controls', showControls));
+  context.subscriptions.push(vscode.commands.registerCommand('activityLab.report', openReport));
   context.subscriptions.push(vscode.commands.registerCommand('activityLab.status', showStatus));
   context.subscriptions.push(vscode.commands.registerCommand('activityLab.presets', managePresets));
   formatStatus();
 }
 function deactivate() {
-  if (active) {
-    const previous = active;
-    previous.running = false;
-    clearInterval(previous.editTimer);
-    clearInterval(previous.statusTimer);
-    active = null;
-    try { writeReport(previous); } catch (_) { /* Host is shutting down. */ }
-  }
+  setupGeneration += 1;
+  return stopSession('Extension deactivated.');
 }
 module.exports = { activate, deactivate };

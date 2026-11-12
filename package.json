@@ -1,9 +1,9 @@
 {
-  "name": "activity-lab-synthetic",
-  "displayName": "Activity Lab | by Albatany",
-  "description": "A sandboxed VS Code editor activity simulator with 141 file profiles, multi-language selection, saved presets, 32 curated modes, and local reports. \u00a9 Albatany 2026.",
-  "version": "5.0.0",
-  "publisher": "localdev",
+  "name": "activity-lab-standalone",
+  "displayName": "Activity Lab Standalone | by Albatany",
+  "description": "A standalone local editor simulation with 141 offline file profiles, 32 curated modes, saved language presets, pause/resume, and local session reports. No external tracking integration.",
+  "version": "6.1.0",
+  "publisher": "albatany",
   "license": "MIT",
   "private": true,
   "engines": {
@@ -27,7 +27,11 @@
     "onCommand:activityLab.start",
     "onCommand:activityLab.stop",
     "onCommand:activityLab.status",
-    "onCommand:activityLab.presets"
+    "onCommand:activityLab.presets",
+    "onCommand:activityLab.pause",
+    "onCommand:activityLab.resume",
+    "onCommand:activityLab.controls",
+    "onCommand:activityLab.report"
   ],
   "contributes": {
     "commands": [
@@ -45,15 +49,43 @@
       },
       {
         "command": "activityLab.presets",
-        "title": "Activity Lab: Manage Language Presets"
+        "title": "Activity Lab: Saved Languages"
+      },
+      {
+        "command": "activityLab.pause",
+        "title": "Activity Lab: Pause Simulation"
+      },
+      {
+        "command": "activityLab.resume",
+        "title": "Activity Lab: Resume Simulation"
+      },
+      {
+        "command": "activityLab.controls",
+        "title": "Activity Lab: Session Controls"
+      },
+      {
+        "command": "activityLab.report",
+        "title": "Activity Lab: Open Session Report"
       }
     ]
   },
   "scripts": {
-    "check": "node --check extension.js && node --check languageSelection.js && node --check modes.js",
-    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/language-selection-test.js && node tests/mock-vscode-integration.js"
+    "check": "node --check extension.js && node --check languageSelection.js && node --check sessionClock.js && node --check modes.js && node --check fileNaming.js && node --check linePatterns.js",
+    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/language-selection-test.js && node tests/mock-vscode-integration.js && node tests/v6-session-test.js",
+    "package": "vsce package --no-dependencies --out release/activity-lab-standalone-6.1.0.vsix"
   },
   "author": {
     "name": "Albatany"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Albatany/Activity-Lab.git"
+  },
+  "homepage": "https://github.com/Albatany/Activity-Lab#readme",
+  "bugs": {
+    "url": "https://github.com/Albatany/Activity-Lab/issues"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "4.0.0"
   }
 }
