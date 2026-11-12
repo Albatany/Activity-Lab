@@ -1,8 +1,10 @@
 # Activity Lab Standalone
 
+**Release:** 6.1.0
+
 **A local editor simulation toolkit by Albatany.** Activity Lab creates clearly labelled scratch files, applies controlled placeholder edits, and records local session reports. It does not connect to activity trackers or communicate with other editor plugins.
 
-**Release:** 6.1.0 · **Platforms:** Visual Studio Code, IntelliJ IDEA, and Arduino IDE companion for Arduino Uno
+**Platforms:** Visual Studio Code, IntelliJ IDEA, and Arduino IDE companion for Arduino Uno
 
 © Albatany 2026, Push the limits.
 
