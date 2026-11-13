@@ -2,7 +2,7 @@
 
 ## Installation
 
-Build the plugin with JDK 21 using `cd intellij` and `./gradlew test buildPlugin` (Windows: `gradlew.bat test buildPlugin`). Install the generated `intellij/build/distributions/activity-lab-6.1.0.zip` through **Settings → Plugins → gear menu → Install Plugin from Disk...**, then restart if requested.
+Build the plugin with JDK 21 using `cd intellij` and `./gradlew test buildPlugin` (Windows: `gradlew.bat test buildPlugin`). Install the generated `intellij/build/distributions/activity-lab-6.1.2.zip` through **Settings → Plugins → gear menu → Install Plugin from Disk...**, then restart if requested.
 
 ## Start a session
 

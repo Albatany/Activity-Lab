@@ -2,7 +2,7 @@
   "name": "activity-lab-standalone",
   "displayName": "Activity Lab Standalone | by Albatany",
   "description": "A standalone local editor simulation with 141 offline file profiles, 32 curated modes, saved language presets, pause/resume, and local session reports. No external tracking integration.",
-  "version": "6.1.0",
+  "version": "6.1.2",
   "publisher": "albatany",
   "license": "MIT",
   "private": true,
@@ -72,7 +72,7 @@
   "scripts": {
     "check": "node --check extension.js && node --check languageSelection.js && node --check sessionClock.js && node --check modes.js && node --check fileNaming.js && node --check linePatterns.js",
     "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/language-selection-test.js && node tests/mock-vscode-integration.js && node tests/v6-session-test.js",
-    "package": "vsce package --no-dependencies --out release/activity-lab-standalone-6.1.0.vsix"
+    "package": "vsce package --no-dependencies --out release/activity-lab-standalone-6.1.2.vsix"
   },
   "author": {
     "name": "Albatany"

@@ -3,8 +3,10 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.vsix
-!release/activity-lab-synthetic-4.0.0.vsix
+!release/activity-lab-standalone-6.1.2.vsix
 *.zip
+!release/Activity-Lab-Arduino-Companion-6.1.0.zip
+!release/activity-lab-6.1.2.zip
 .vscode-test/
 .vscode/
 coverage/
@@ -12,3 +14,10 @@ coverage/
 .env.*
 !.env.example
 session-report.json
+
+# IntelliJ plugin build outputs
+intellij/.gradle/
+intellij/.intellijPlatform/
+intellij/build/
+intellij/.idea/
+*.iml

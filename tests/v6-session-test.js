@@ -187,7 +187,7 @@ test('Pause/Resume preserves files, counters and deadline; reports reflect every
     h.ui.minutes = 5;
     await h.start();
     const before = h.report();
-    assert.equal(before.extension_version, '6.1.0');
+    assert.equal(before.extension_version, '6.1.2');
     assert.equal(before.session_state, 'running');
     assert.equal(before.stopped_at, null);
     assert.equal(before.synthetic_steps, 1);

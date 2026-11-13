@@ -1,10 +1,16 @@
-name: Verify Activity Lab
+name: Build and verify VS Code extension
 on:
   push:
   pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -12,7 +18,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+      - name: Install packaging tools
+        run: npm ci
       - name: Test source
         run: npm test
       - name: Check syntax
         run: npm run check
+      - name: Verify shared catalog
+        run: node scripts/sync-intellij-catalog.js --check
+      - name: Package VSIX
+        run: npm run package
+      - name: Upload VS Code installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: activity-lab-vscode-6.0.0-${{ matrix.os }}
+          path: release/activity-lab-synthetic-6.0.0.vsix

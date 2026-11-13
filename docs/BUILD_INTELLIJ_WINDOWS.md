@@ -10,8 +10,8 @@ This helper avoids PowerShell working-directory mistakes. It is placed beside th
 
 ## Build (recommended)
 
-1. Extract `Activity-Lab-Standalone-6.1.0-Source-Kit.zip` completely. Do not run the build from inside the ZIP preview.
-2. Open the extracted folder `Activity-Lab-Standalone-6.1.0\Activity-Lab`.
+1. Extract `Activity-Lab-Standalone-6.1.2-Source-Kit.zip` completely. Do not run the build from inside the ZIP preview.
+2. Open the extracted folder `Activity-Lab-Standalone-6.1.2\Activity-Lab`.
 3. Click the address bar in File Explorer, type `powershell`, and press Enter. PowerShell opens in the correct folder.
 4. Run:
 
@@ -34,7 +34,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Build-IntelliJ.ps1
 
 ## Alternative: run Gradle directly
 
-From `Activity-Lab-Standalone-6.1.0\Activity-Lab`:
+From `Activity-Lab-Standalone-6.1.2\Activity-Lab`:
 
 ```powershell
 cd .\intellij
@@ -48,7 +48,7 @@ cd .\intellij
 After a successful build, the installable plugin is:
 
 ```text
-intellij\build\distributions\activity-lab-6.1.0.zip
+intellij\build\distributions\activity-lab-6.1.2.zip
 ```
 
 Install it in IntelliJ IDEA via **Settings > Plugins > gear icon > Install Plugin from Disk...** and select the ZIP.
@@ -66,7 +66,7 @@ The build has not been run on your Windows computer. The resulting ZIP is consid
 
 ## Easiest Windows method
 
-After extracting the source kit, open `Activity-Lab-Standalone-6.1.0\\Activity-Lab`.
+After extracting the source kit, open `Activity-Lab-Standalone-6.1.2\\Activity-Lab`.
 Double-click `Build-IntelliJ.cmd`. This launcher changes to its own project directory and invokes
 `Build-IntelliJ.ps1` with a temporary execution-policy bypass. Keep `Build-IntelliJ.cmd`,
 `Build-IntelliJ.ps1`, and the `intellij` folder together in the `Activity-Lab` directory.

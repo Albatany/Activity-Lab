@@ -5,7 +5,7 @@ const path = require('node:path');
 const pkg = require('../package.json');
 const languages = require('../languages.json');
 const src = fs.readFileSync(path.join(__dirname, '..', 'extension.js'), 'utf8');
-assert.equal(pkg.version, '6.1.0');
+assert.equal(pkg.version, '6.1.2');
 assert(pkg.contributes.commands.some(c => c.command === 'activityLab.start'));
 assert(pkg.contributes.commands.some(c => c.command === 'activityLab.stop'));
 assert(languages.length >= 130);

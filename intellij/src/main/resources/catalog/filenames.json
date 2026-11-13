@@ -20,7 +20,7 @@
     ],
     "shellscript": [
       "deploy_script",
-      "log_analysis",
+      "runtime_inspection",
       "bootstrap",
       "server_check",
       "debugging",
@@ -64,7 +64,7 @@
     "markdown": [
       "architecture_notes",
       "project_notes",
-      "research_log",
+      "research_notes",
       "things",
       "projects"
     ],

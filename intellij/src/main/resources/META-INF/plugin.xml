@@ -11,7 +11,7 @@
         <p>Developed by Albatany. © Albatany 2026.</p>
     ]]></description>
     <change-notes><![CDATA[
-        <p>6.1.0: Standalone edition. Removed online catalog lookup, project-name override, external tracker metadata, and tracker diagnostics. Offline language profiles, saved selections, sandbox sessions, foreground/background controls, and local reports remain.</p>
+        <p>6.1.2: Standalone compatibility update. Generated shell-script and Markdown scratch filename stems no longer contain the log substring. Native editor tabs, document edits, and saves are preserved. Separately installed editor extensions may independently observe normal editor events. Earlier 6.1.0 standalone changes remain: Removed online catalog lookup, project-name override, external tracker metadata, and tracker diagnostics. Offline language profiles, saved selections, sandbox sessions, foreground/background controls, and local reports remain.</p>
     ]]></change-notes>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>

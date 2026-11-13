@@ -18,3 +18,6 @@ coverage/
 .env.*
 !.env.example
 session-report.json
+
+intellij/**
+scripts/**

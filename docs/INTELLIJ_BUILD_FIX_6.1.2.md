@@ -1,8 +1,8 @@
-# IntelliJ IDEA build corrections — Activity Lab 6.1.0
+# IntelliJ IDEA build corrections — Activity Lab 6.1.2
 
 ## BuildFix1 / BuildFix2
 
-The first source correction removed stale references to `Session.documentEvents` and `Session.saveEvents` from the session report. A subsequent compile identified that `SessionService` still uses the IntelliJ Platform `Document` type for local file simulations, so `com.intellij.openapi.editor.Document` was restored as an explicit import. These changes preserve the editor and sandbox workflow and do not add IDE event tracking or WakaTime integration.
+The first source correction removed stale references to `Session.documentEvents` and `Session.saveEvents` from the session report. A subsequent compile identified that `SessionService` still uses the IntelliJ Platform `Document` type for local file simulations, so `com.intellij.openapi.editor.Document` was restored as an explicit import. These changes preserve the editor and sandbox workflow and do not add any external tracker integration or alter the native local editor workflow.
 
 ## BuildFix3 — terminal report ordering
 

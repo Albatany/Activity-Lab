@@ -2,7 +2,7 @@
 
 ## Installation
 
-Install `release/activity-lab-standalone-6.1.0.vsix` using **Extensions → ... → Install from VSIX...**, then reload VS Code if requested.
+Install `release/activity-lab-standalone-6.1.2.vsix` using **Extensions → ... → Install from VSIX...**, then reload VS Code if requested.
 
 ## Starting a session
 

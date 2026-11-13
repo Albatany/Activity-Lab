@@ -6,7 +6,7 @@ Confirm that the `.vsix` file was installed through **Extensions → ... → Ins
 
 ## IntelliJ plugin fails to load
 
-Confirm the plugin ZIP is the installable `activity-lab-intellij-6.1.0.zip`, not the outer source archive. Check **Help → Show Log in Explorer/Finder** for plugin loading errors and verify that your IDE build is compatible with the plugin's declared baseline.
+Confirm the plugin ZIP is the installable `activity-lab-6.1.2.zip`, not the outer source archive. Check **Help → Show Log in Explorer/Finder** for plugin loading errors and verify that your IDE build is compatible with the plugin's declared baseline.
 
 ## Session stops unexpectedly
 

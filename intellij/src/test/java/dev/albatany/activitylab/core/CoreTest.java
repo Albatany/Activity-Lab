@@ -18,6 +18,14 @@ class CoreTest {
         assertEquals(141, Catalog.languages().stream().map(LanguageProfile::label).distinct().count());
         for (Catalog.Mode mode : Catalog.modes()) assertEquals(mode.languages().size(), Catalog.resolve(mode.languages()).size(), mode.title());
     }
+    @Test void generatedFilenameStemsAvoidLogLikePaths() {
+        for (LanguageProfile profile : Catalog.languages()) {
+            for (String stem : Catalog.stems(profile)) {
+                assertFalse(stem.toLowerCase(Locale.ROOT).contains("log"),
+                    profile.label() + " generated filename stem must not contain the log substring: " + stem);
+            }
+        }
+    }
     @Test void balancedPatternHasCorrectWarmupAndSteadyState() {
         FileSimulation simulation = new FileSimulation(language("Python"));
         FileSimulation.Plan first = simulation.plan(simulation.expected(), EditPattern.BALANCED, 0, 0);

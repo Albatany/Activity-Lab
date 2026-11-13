@@ -6,11 +6,11 @@ param(
 $ErrorActionPreference = 'Stop'
 $ProjectDir = Join-Path $PSScriptRoot 'intellij'
 $Wrapper = Join-Path $ProjectDir 'gradlew.bat'
-$ExpectedZip = Join-Path $ProjectDir 'build\distributions\activity-lab-6.1.0.zip'
+$ExpectedZip = Join-Path $ProjectDir 'build\distributions\activity-lab-6.1.2.zip'
 $CmdExe = if ($env:ComSpec) { $env:ComSpec } else { 'cmd.exe' }
 
 Write-Host ''
-Write-Host 'Activity Lab Standalone 6.1.0 - IntelliJ IDEA Builder' -ForegroundColor Cyan
+Write-Host 'Activity Lab Standalone 6.1.2 - IntelliJ IDEA Builder' -ForegroundColor Cyan
 Write-Host 'Copyright (c) Albatany 2026' -ForegroundColor DarkGray
 Write-Host ''
 

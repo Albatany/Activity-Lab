@@ -1,4 +1,4 @@
-# IntelliJ IDEA 6.1.0 Validation
+# IntelliJ IDEA 6.1.2 Validation
 
 This release keeps local sandbox simulation, offline language selection, presets, foreground/background scheduling, and local JSON reports.
 

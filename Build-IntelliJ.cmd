@@ -2,7 +2,7 @@
 setlocal
 cd /d "%~dp0"
 echo.
-echo Activity Lab Standalone 6.1.0 - IntelliJ IDEA Builder
+echo Activity Lab Standalone 6.1.2 - IntelliJ IDEA Builder
 echo This launcher runs the PowerShell build script from the correct folder.
 echo.
 if not exist "%~dp0Build-IntelliJ.ps1" (

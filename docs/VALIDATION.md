@@ -1,6 +1,6 @@
 # Validation
 
-Release target: Activity Lab Standalone 6.1.0.
+Release target: Activity Lab Standalone 6.1.2.
 
 ## Source-level checks
 
