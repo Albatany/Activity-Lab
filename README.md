@@ -6,7 +6,7 @@
 
 **Platforms:** Visual Studio Code, IntelliJ IDEA, and Arduino IDE companion for Arduino Uno
 
-© Albatany 2026 — Push the limits.
+© Albatany 2026, Push the limits.
 
 ## What is included
 
