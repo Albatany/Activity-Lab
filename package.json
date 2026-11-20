@@ -1,9 +1,9 @@
 {
-  "name": "activity-lab-standalone",
-  "displayName": "Activity Lab Standalone | by Albatany",
-  "description": "A standalone local editor simulation with 141 offline file profiles, 32 curated modes, saved language presets, pause/resume, and local session reports. No external tracking integration.",
-  "version": "6.1.2",
-  "publisher": "albatany",
+  "name": "activity-lab-synthetic",
+  "displayName": "Activity Lab",
+  "description": "Simulate edits in isolated VS Code files using one language, a saved selection or a professional mode. Apply each edit at once or watch the code appear one character at a time.",
+  "version": "4.1.1",
+  "publisher": "localdev",
   "license": "MIT",
   "private": true,
   "engines": {
@@ -17,75 +17,37 @@
     "activity",
     "editor",
     "extension-testing",
-    "languages",
-    "multi-language",
-    "language-presets",
-    "custom-profiles"
+    "languages"
   ],
   "main": "./extension.js",
   "activationEvents": [
     "onCommand:activityLab.start",
     "onCommand:activityLab.stop",
-    "onCommand:activityLab.status",
-    "onCommand:activityLab.presets",
-    "onCommand:activityLab.pause",
-    "onCommand:activityLab.resume",
-    "onCommand:activityLab.controls",
-    "onCommand:activityLab.report"
+    "onCommand:activityLab.status"
   ],
   "contributes": {
     "commands": [
       {
         "command": "activityLab.start",
-        "title": "Activity Lab: Start Simulation"
+        "title": "Activity Lab: Start Session"
       },
       {
         "command": "activityLab.stop",
-        "title": "Activity Lab: Stop Simulation"
+        "title": "Activity Lab: Stop Session"
       },
       {
         "command": "activityLab.status",
-        "title": "Activity Lab: Session Status"
-      },
-      {
-        "command": "activityLab.presets",
-        "title": "Activity Lab: Saved Languages"
-      },
-      {
-        "command": "activityLab.pause",
-        "title": "Activity Lab: Pause Simulation"
-      },
-      {
-        "command": "activityLab.resume",
-        "title": "Activity Lab: Resume Simulation"
-      },
-      {
-        "command": "activityLab.controls",
-        "title": "Activity Lab: Session Controls"
-      },
-      {
-        "command": "activityLab.report",
-        "title": "Activity Lab: Open Session Report"
+        "title": "Activity Lab: Show Status"
       }
     ]
   },
   "scripts": {
-    "check": "node --check extension.js && node --check languageSelection.js && node --check sessionClock.js && node --check modes.js && node --check fileNaming.js && node --check linePatterns.js",
-    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/language-selection-test.js && node tests/mock-vscode-integration.js && node tests/v6-session-test.js",
-    "package": "vsce package --no-dependencies --out release/activity-lab-standalone-6.1.2.vsix"
+    "check": "node --check extension.js",
+    "test": "node tests/smoke-test.js && node tests/patterns-test.js && node tests/modes-and-naming-test.js && node tests/mock-vscode-integration.js",
+    "build": "python scripts/build.py"
   },
   "author": {
     "name": "Albatany"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Albatany/Activity-Lab.git"
-  },
-  "homepage": "https://github.com/Albatany/Activity-Lab#readme",
-  "bugs": {
-    "url": "https://github.com/Albatany/Activity-Lab/issues"
-  },
-  "devDependencies": {
-    "@vscode/vsce": "4.0.0"
-  }
+  "icon": "media/activity-lab.png"
 }

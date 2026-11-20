@@ -1,37 +1,14 @@
-# Changelog
+# Activity Lab changelog
 
-## 6.1.2 — Editor-event compatibility
+| Version | Changes |
+| --- | --- |
+| 4.1.1 | Added the Activity Lab icon, native icons for mode selection and category headings for professional roles. Added a GitHub release and package workflow. |
+| 4.1.0 | Added manual language selection, shuffled rounds, named presets and character typing. Added 12 professional modes and samples specific to each built-in profile. Translated the interface and guides into English. |
+| 4.0.0 (October 17, 2026) | Added 32 professional modes, project labels, randomized filenames and file details in session reports. Added an Indonesian interface, contributor guides and a verification workflow. |
+| 3.0.0 | Added the 1:1, 4:1 and 8:1 edit patterns, local change counters, session reports and file safeguards. |
+| 2.0.0 | Expanded the catalog to 141 profiles. Added online lookup, custom file types, full stack rotation, timed sessions up to eight hours and sessions that stop manually. |
+| 1.0.0 | Introduced isolated scratch files, 12 language choices, Start, Stop and Status commands, configurable intervals, sessions from 5 to 120 minutes and project markers. |
 
-- Preserved native editor tabs, document edits, and local saves; the disk-only behaviour proposed in the earlier 6.1.1 experiment is not used in this release.
-- Renamed generated ShellScript and Markdown scratch filename stems from `log_analysis` / `research_log` to `runtime_inspection` / `research_notes` to avoid the `log` substring that can collide with log-tail heuristics in separately installed IDE extensions.
-- Added regression tests in VS Code and IntelliJ to prevent generated stems from reintroducing that substring.
-- Clarified that independent editor extensions may observe normal IDE file events; Activity Lab still has no tracker API integration, does not inspect other extensions, and does not alter their settings or custom rules.
+The extension ID is `localdev.activity-lab-synthetic`. Installing a newer VSIX updates the existing extension. Reports and scratch files from earlier sessions keep their original contents.
 
-## 6.1.0 — Standalone Edition
-
-- Removed all external-tracker code, endpoints, online catalog lookup, plugin inspection, project markers, UI labels, diagnostics, and report fields.
-- Removed optional project-name override from VS Code and IntelliJ editions.
-- Retained the bundled offline language profiles, curated professional modes, Saved Languages, custom file profiles, randomized filenames, local edit patterns, timed/indefinite sessions, pause/resume, local counters, and JSON reports.
-- Preserved the IntelliJ foreground/background scheduler without any external tracker references.
-- Corrected the IntelliJ standalone cleanup by removing a stale document/save-event status reference that belonged to the former tracker-diagnostics path; Activity Lab itself does not collect tracker metrics; normal editor events produced by opening, editing, and saving local scratch documents may still be observed by separately installed IDE extensions.
-- Added the Arduino Uno companion bundle with local Arduino CLI compile/upload helpers.
-- Updated documentation and release packaging for standalone operation.
-
-## 6.0.2 — IntelliJ Background Scheduler
-
-- Added an option to continue local simulation steps while IntelliJ IDEA is inactive.
-- Separated running, waiting, and manually paused time in local session state.
-- Kept the original session deadline when waiting or paused; missed steps are not replayed.
-- Kept editor tabs unchanged during background steps.
-
-## 6.0.1 — IntelliJ Session Reliability
-
-- Added foreground-aware scheduling, local session-state reporting, and improved editor operations.
-- Added tests for background scheduling, preset state, and editor file behaviour.
-
-## 6.0.0 — Multi-language Sessions
-
-- Added the IntelliJ edition, multi-language sessions, professional modes, Saved Languages, presets, local reports, and custom file profiles.
-- Added durations up to eight hours and Until I Stop.
-
-© Albatany 2026.
+[Current release notes](docs/releases/v4.1.1.md)

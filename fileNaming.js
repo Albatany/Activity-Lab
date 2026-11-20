@@ -4,13 +4,13 @@ const crypto = require('node:crypto');
 const STEMS = Object.freeze({
   python: ['data_pipeline', 'model_training', 'debugging', 'feature_engineering', 'test_suite', 'service_core', 'analytics', 'projects'],
   sql: ['database_schema', 'query_report', 'customer_metrics', 'warehouse_models', 'data_audit', 'projects'],
-  shellscript: ['deploy_script', 'runtime_inspection', 'bootstrap', 'server_check', 'debugging', 'projects'],
+  shellscript: ['deploy_script', 'log_analysis', 'bootstrap', 'server_check', 'debugging', 'projects'],
   powershell: ['system_check', 'automation', 'debugging', 'scripts', 'projects'],
   typescript: ['api_routes', 'app_config', 'service_layer', 'debugging', 'projects', 'things'],
   typescriptreact: ['dashboard_view', 'component_library', 'app_layout', 'projects', 'things'],
   javascript: ['api_client', 'debugging', 'event_handler', 'projects', 'things'],
   javascriptreact: ['component_library', 'dashboard_view', 'projects', 'things'],
-  markdown: ['architecture_notes', 'project_notes', 'research_notes', 'things', 'projects'],
+  markdown: ['architecture_notes', 'project_notes', 'research_log', 'things', 'projects'],
   yaml: ['pipeline_config', 'environment_config', 'deployment_rules', 'projects'],
   json: ['app_settings', 'response_schema', 'debugging', 'project_config'],
   dockerfile: ['container_build', 'service_image', 'projects'],
@@ -42,4 +42,12 @@ function buildFileName(language, reserved, chooser = crypto.randomInt) {
   }
   throw new Error('Could not reserve a unique scratch file name');
 }
-module.exports = { STEMS, GENERIC, buildFileName };
+function validateProjectName(name) {
+  const value = (name || '').trim();
+  if (!value) return null;
+  if (value.length > 64 || !/^[\p{L}\p{N}][\p{L}\p{N} _().+]{0,63}$/u.test(value)) {
+    return 'Use up to 64 characters. Start with a letter or number. Spaces, underscores, periods, plus signs and parentheses are allowed.';
+  }
+  return null;
+}
+module.exports = { STEMS, GENERIC, buildFileName, validateProjectName };

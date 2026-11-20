@@ -1,32 +1,13 @@
 # Troubleshooting
 
-## VS Code extension does not appear
+| Symptom | What to check |
+| --- | --- |
+| Activity Lab commands are missing. | Verify that the VSIX is installed and enabled in this VS Code profile. Run **Developer: Reload Window**, then search the Command Palette for Activity Lab. |
+| The terminal cannot find `code`. | Use **Extensions** and **Install from VSIX** in VS Code. |
+| A preset is missing. | Open **Saved Language** in the profile where you saved it. **Use once** skips saving. |
+| A session stopped adding text. | Run **Activity Lab: Show Status**. A manual edit, file limit, expired timer or closed extension host can end a session. |
+| A scratch file keeps its plain text grammar. | Install a VS Code grammar for that language. Samples still use the selected profile. |
+| A tracker shows different counts or a different project name. | Check the session marker and the tracker’s logs. See the guide below for how the local counters work. |
+| Scratch files use too much disk space. | Stop the session, then delete the session folders you no longer need. |
 
-Confirm that the `.vsix` file was installed through **Extensions → ... → Install from VSIX...** and reload the window. Check **Developer: Show Running Extensions** for activation errors.
-
-## IntelliJ plugin fails to load
-
-Confirm the plugin ZIP is the installable `activity-lab-6.1.2.zip`, not the outer source archive. Check **Help → Show Log in Explorer/Finder** for plugin loading errors and verify that your IDE build is compatible with the plugin's declared baseline.
-
-## Session stops unexpectedly
-
-Activity Lab stops when a generated scratch file is changed outside its expected content, the configured size limit is reached, an editor operation fails, or the session duration expires. Manually changed files are preserved.
-
-## Arduino CLI is not found
-
-Install Arduino CLI and add it to `PATH`, or set `ARDUINO_CLI` to the full executable path. Run `arduino-cli version` to verify.
-
-## Arduino board not listed
-
-Use `arduino-cli board list`, try another USB data cable or port, and confirm the OS has permission to access the serial device. Select the exact port manually when running the upload helper.
-
-## Arduino compile/upload fails
-
-Confirm `arduino:avr` is installed (`arduino-cli core list`), the board is an Uno, and the sketch folder contains `ActivityLabUno.ino`. Compile first and inspect the complete CLI output before attempting upload.
-
-© Albatany 2026.
-
-
-### IntelliJ builder stops while detecting Java 25
-
-The bundled Gradle wrapper is 9.0.0 and the plugin uses a Java 21 toolchain. Install a full JDK 21 with `winget install EclipseAdoptium.Temurin.21.JDK`, then rerun `Build-IntelliJ.cmd`. The updated builder automatically selects a detected JDK 21 without changing your system-wide Java settings.
+[Project names and statistics](PROJECTS_AND_STATISTICS.md)
