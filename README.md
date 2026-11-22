@@ -10,7 +10,9 @@ In VS Code 1.85 or later, open **Extensions**, choose **Install from VSIX** from
 
 ## Start a session
 
-Run **Activity Lab: Start Session** from the Command Palette. Choose a language source, enter an optional project name and select the duration, edit pattern, interval and typing style. Review the settings and choose **Start session**.
+Run **Activity Lab: Start Session** from the Command Palette. Choose a language source, enter an optional project name and select the duration, edit pattern, interval and typing style. Review the settings and choose **Start session**. 
+
+(CAUCTION! if you use the typing animaiton or something like character by character (not instant) you may get flagged in one of THOSE provider can getting like "public profile stats made private because tailing log file(s)" so becareful with that option, but the rest of it it's fine.
 
 | Language source | What it does |
 | --- | --- |
@@ -73,5 +75,3 @@ The build writes the current installer to `release/`. The project uses JavaScrip
 [Changelog](CHANGELOG.md)
 
 [Contributing](CONTRIBUTING.md)
-
-Copyright 2026 Albatany. [MIT license](LICENSE)
